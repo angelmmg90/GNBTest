@@ -11,7 +11,7 @@ import com.macdonald.angel.gnb.data.toTransactionModel
 import com.macdonald.angel.usecases.TransactionsUseCases
 import kotlinx.coroutines.*
 
-class TransactionsListViewModel (
+class TransactionsListViewModel(
     private val ctx: Application,
     private val transactionsUserCase: TransactionsUseCases
 ):ScopedViewModel(), TransactionsListContract.ViewModel {
@@ -41,7 +41,7 @@ class TransactionsListViewModel (
         }
     }
 
-    override suspend fun getAllTransactions() {
+    override fun getAllTransactions() {
         lateinit var response: Response<Array<TransactionDomain>>
 
         getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {

@@ -7,7 +7,7 @@ interface TransactionsListContract {
     }
 
     interface ViewModel {
-        suspend fun getAllTransactions()
+        fun getAllTransactions()
     }
 
 }
