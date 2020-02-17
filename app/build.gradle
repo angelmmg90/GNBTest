@@ -52,6 +52,7 @@ dependencies {
     implementation androidLibs.values()
     implementation kotlinLibs.values()
     implementation libs.values()
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt androidKaptLibs.values()
 
     testImplementation testLibs.values()

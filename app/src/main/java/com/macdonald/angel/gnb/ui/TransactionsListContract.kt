@@ -1,15 +1,13 @@
-package com.amacdong.usertaskcontrol.ui.features.tasksList.allTasks
+package com.macdonald.angel.gnb.ui
 
-interface ListTasksContract {
+interface TransactionsListContract {
     interface View {
         fun initializeViews()
-        fun createNewTask()
-        fun updateUi(model: ListTasksViewModel.UiModel)
+        fun updateUi(model: TransactionsListViewModel.UiModel)
     }
 
     interface ViewModel {
-        fun viewLoaded()
-        suspend fun getAllTasks()
+        suspend fun getAllTransactions()
     }
 
 }

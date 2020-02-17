@@ -1,21 +1,22 @@
-package com.amacdong.usertaskcontrol.ui.features.tasksList.allTasks
+package com.macdonald.angel.gnb.ui
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.amacdong.data.model.TaskModel
-import com.amacdong.usercase.TaskUserCase
-import com.amacdong.usertaskcontrol.common.ScopedViewModel
+import com.macdonald.angel.data.model.TransactionModel
+import com.macdonald.angel.data.repositories.Response
+import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
+import com.macdonald.angel.gnb.common.ScopedViewModel
+import com.macdonald.angel.gnb.data.toTransactionModel
+import com.macdonald.angel.usecases.TransactionsUseCases
 import kotlinx.coroutines.*
 
-class ListTasksViewModel (
+class TransactionsListViewModel (
     private val ctx: Application,
-    private val taskUserCase: TaskUserCase
-): ScopedViewModel(),
-    ListTasksContract.ViewModel {
+    private val transactionsUserCase: TransactionsUseCases
+):ScopedViewModel(), TransactionsListContract.ViewModel {
 
-    private lateinit var tasksData: List<TaskModel>
-    private lateinit var getTasksJob: Job
+    private lateinit var getTransactionsJob: Job
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -24,8 +25,10 @@ class ListTasksViewModel (
         }
 
     sealed class UiModel {
-        class ShowTasks(val listFarms: List<TaskModel>) : UiModel()
-        object BdError : UiModel()
+        class ShowTransactions(val transactionList: List<TransactionModel>) : UiModel()
+        object Forbbiden : UiModel()
+        object ErrorGettingTrasactions : UiModel()
+        object NetWorkError : UiModel()
     }
 
     init {
@@ -33,33 +36,49 @@ class ListTasksViewModel (
     }
 
     fun cancelJobs() {
-        if (::getTasksJob.isInitialized && getTasksJob.isActive) {
-            getTasksJob.cancel()
+        if (::getTransactionsJob.isInitialized && getTransactionsJob.isActive) {
+            getTransactionsJob.cancel()
         }
     }
 
-    override fun viewLoaded() {
-        tasksData = emptyList()
-        CoroutineScope(Dispatchers.IO).launch {
-            getAllTasks()
-        }
-    }
+    override suspend fun getAllTransactions() {
+        lateinit var response: Response<Array<TransactionDomain>>
 
-    override suspend fun getAllTasks() {
-        withContext(Dispatchers.IO) {
-            tasksData = taskUserCase.getAllTasks()
-        }
-        if (tasksData.isNullOrEmpty()) {
-            withContext(Dispatchers.Main) {
-                _model.value =
-                    UiModel.BdError
+        getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                response = transactionsUserCase.getTransactionsFromRemote()
             }
-        } else {
-            withContext(Dispatchers.Main) {
-                _model.value =
-                    UiModel.ShowTasks(
-                        tasksData
-                    )
+            when (response) {
+                is Response.Forbidden -> {
+                    withContext(Dispatchers.Main) {
+                        _model.value = UiModel.Forbbiden
+                    }
+                }
+
+                is Response.Error -> {
+                    withContext(Dispatchers.Main) {
+                        _model.value = UiModel.ErrorGettingTrasactions
+                    }
+                }
+
+                is Response.NetWorkError -> {
+                    withContext(Dispatchers.Main) {
+                        _model.value = UiModel.NetWorkError
+                    }
+                }
+
+                is Response.Success -> {
+                    var transactionsListModel = ArrayList<TransactionModel>()
+                    var rawListTransactions = (response as Response.Success<Array<TransactionDomain>>).data
+
+                    rawListTransactions.forEach {
+                        transactionsListModel.add(it.toTransactionModel())
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        _model.value = UiModel.ShowTransactions(transactionsListModel)
+                    }
+                }
             }
         }
     }
