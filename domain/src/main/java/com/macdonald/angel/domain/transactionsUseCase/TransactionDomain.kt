@@ -1,4 +1,4 @@
-package com.macdonald.angel.domain
+package com.macdonald.angel.domain.transactionsUseCase
 
 data class TransactionDomain (
     val sku : String = "",

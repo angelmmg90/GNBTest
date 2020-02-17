@@ -1,8 +1,8 @@
-package com.amacdong.data.sources
+package com.macdonald.angel.data.sources
 
-import com.amacdong.data.model.FarmModel
+import com.macdonald.angel.data.repositories.Response
+import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 
-interface FarmLocalDatasource {
-    suspend fun getFarmsFromLocal(): List<FarmModel>
-    suspend fun persistFarmsIntoDatabase(farmsDomain: List<FarmModel>): Boolean
+interface TransactionsRemoteDatasource {
+    suspend fun getTransactionsFromRemote(): Response<Array<TransactionDomain>>
 }

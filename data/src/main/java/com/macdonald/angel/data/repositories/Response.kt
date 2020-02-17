@@ -1,4 +1,4 @@
-package com.amacdong.data.repositories
+package com.macdonald.angel.data.repositories
 
 sealed class Response<out T> {
     class Success<out T>(val data: T) : Response<T>()

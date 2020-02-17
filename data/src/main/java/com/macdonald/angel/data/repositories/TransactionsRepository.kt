@@ -1,20 +1,11 @@
-package com.amacdong.data.repositories
+package com.macdonald.angel.data.repositories
 
-import com.amacdong.data.model.FarmModel
-import com.amacdong.data.sources.FarmLocalDatasource
-import com.amacdong.data.sources.FarmRemoteDatasource
-import com.amacdong.domain.farmUserCase.FarmDomain
+import com.macdonald.angel.data.sources.TransactionsRemoteDatasource
+import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 
-class FarmRepository (
-    private val farmRemoteDatasource: FarmRemoteDatasource,
-    private val farmLocalDatasource: FarmLocalDatasource
+class TransactionsRepository (
+    private val transactionsRemoteDatasource: TransactionsRemoteDatasource
 ) {
-    suspend fun getFarmsFromRemote(): Response<Array<FarmDomain>> =
-        farmRemoteDatasource.getFarmsFromRemote()
-
-    suspend fun getFarmsFromLocal(): List<FarmModel> =
-        farmLocalDatasource.getFarmsFromLocal()
-
-    suspend fun persistFarmsIntoDatabase(farmsDomain: List<FarmModel>) =
-        farmLocalDatasource.persistFarmsIntoDatabase(farmsDomain)
+    suspend fun getTransactionsFromRemote(): Response<Array<TransactionDomain>> =
+        transactionsRemoteDatasource.getTransactionsFromRemote()
 }
