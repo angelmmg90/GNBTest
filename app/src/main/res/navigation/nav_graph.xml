@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/transactionsListFragment"
         android:name="com.macdonald.angel.gnb.ui.TransactionsListFragment"
-        android:label="fragment_transactions_list"
+        android:label="@string/transaction_list_fragment_name"
         tools:layout="@layout/fragment_transactions_list" />
 </navigation>
