@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navController = host.navController
 
         val topLevelDestinations = hashSetOf<Int>() //Add the main destinations
-        //topLevelDestinations.add(R.id.fragment)
+        topLevelDestinations.add(R.id.transactionsListFragment)
 
         appBarConfiguration = AppBarConfiguration.Builder(topLevelDestinations)
             .build()
