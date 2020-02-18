@@ -4,9 +4,12 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.macdonald.angel.data.model.RateModel
+import com.macdonald.angel.data.repositories.Response
+import com.macdonald.angel.domain.ratesUseCase.RateDomain
 import com.macdonald.angel.gnb.common.ScopedViewModel
+import com.macdonald.angel.gnb.data.toRateModel
 import com.macdonald.angel.usecases.RatesUseCases
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 
 class RateListViewModel(
     private val ctx: Application,
@@ -39,6 +42,50 @@ class RateListViewModel(
     }
 
     override fun getAllRates() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        lateinit var response: Response<Array<RateDomain>>
+
+        getRatesJob = CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                response = ratesUserCase.getRatesFromRemote()
+            }
+            when (response) {
+                is Response.Forbidden -> {
+                    withContext(Dispatchers.Main) {
+                        _model.value =
+                            UiModel.Forbbiden
+                    }
+                }
+
+                is Response.Error -> {
+                    withContext(Dispatchers.Main) {
+                        _model.value =
+                            UiModel.ErrorGettingRates
+                    }
+                }
+
+                is Response.NetWorkError -> {
+                    withContext(Dispatchers.Main) {
+                        _model.value =
+                            UiModel.NetWorkError
+                    }
+                }
+
+                is Response.Success -> {
+                    var ratesListModel = ArrayList<RateModel>()
+                    var rawListRates = (response as Response.Success<Array<RateDomain>>).data
+
+                    rawListRates.forEach {
+                        ratesListModel.add(it.toRateModel())
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        _model.value =
+                            UiModel.ShowRates(
+                                ratesListModel
+                            )
+                    }
+                }
+            }
+        }
     }
 }
