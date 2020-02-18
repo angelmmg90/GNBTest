@@ -13,6 +13,6 @@
     <fragment
         android:id="@+id/rateListFragment"
         android:name="com.macdonald.angel.gnb.ui.features.rateList.RateListFragment"
-        android:label="fragment_rate_list"
+        android:label="@string/rate_list_fragment_name"
         tools:layout="@layout/fragment_rate_list" />
 </navigation>
