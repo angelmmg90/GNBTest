@@ -1,0 +1,24 @@
+package com.macdonald.angel.gnb.data.database.daos
+
+import androidx.room.*
+import com.macdonald.angel.gnb.data.database.entities.ProductEntity
+
+@Dao
+interface ProductDAO {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertProduct(rate: ProductEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertProducts(products: List<ProductEntity>)
+
+    @Delete
+    fun deleteProduct(rate: ProductEntity)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateProduct(rate: ProductEntity)
+
+    @Query("SELECT * from product_entity")
+    fun getProucts(): List<ProductEntity>
+
+}

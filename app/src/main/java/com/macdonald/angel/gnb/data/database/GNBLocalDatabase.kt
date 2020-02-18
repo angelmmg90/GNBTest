@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.macdonald.angel.gnb.data.database.daos.ProductDAO
 import com.macdonald.angel.gnb.data.database.daos.RateDAO
 import com.macdonald.angel.gnb.data.database.daos.TransactionDAO
+import com.macdonald.angel.gnb.data.database.entities.ProductEntity
 import com.macdonald.angel.gnb.data.database.entities.RateEntity
 import com.macdonald.angel.gnb.data.database.entities.TransactionEntity
 
 @Database(
     entities = [
         RateEntity::class,
-        TransactionEntity::class
+        TransactionEntity::class,
+        ProductEntity::class
     ],
     version = 1,
     exportSchema = false
@@ -30,4 +33,5 @@ abstract class GNBLocalDatabase : RoomDatabase() {
 
     abstract fun rateDAO(): RateDAO
     abstract fun transactionDAO(): TransactionDAO
+    abstract fun productDAO(): ProductDAO
 }

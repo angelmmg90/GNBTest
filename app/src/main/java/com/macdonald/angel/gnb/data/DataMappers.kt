@@ -1,9 +1,12 @@
 package com.macdonald.angel.gnb.data
 
+import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.model.RateModel
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.domain.ratesUseCase.RateDomain
 import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
+import com.macdonald.angel.gnb.data.database.entities.ProductEntity
+import com.macdonald.angel.gnb.data.database.entities.TransactionEntity
 
 fun TransactionDomain.toTransactionModel(): TransactionModel =
     TransactionModel(
@@ -12,9 +15,43 @@ fun TransactionDomain.toTransactionModel(): TransactionModel =
         currency
     )
 
+fun TransactionModel.toTransactionEntity(): TransactionEntity =
+    TransactionEntity(
+        product = product,
+        amount = amount,
+        currency = currency
+    )
+
+fun TransactionEntity.toTransactionModel(): TransactionModel =
+    TransactionModel(
+        product = product,
+        amount = amount,
+        currency = currency
+    )
+
 fun RateDomain.toRateModel(): RateModel =
     RateModel(
         from,
         to,
         rate
     )
+
+fun ProductModel.toProductEntity(): ProductEntity {
+    val transactionListEntity = ArrayList<TransactionEntity>()
+    transactions?.forEach { transactionListEntity.add(it.toTransactionEntity()) }
+    return ProductEntity(
+        name = name,
+        transactions = transactionListEntity,
+        totalSum = totalSum
+    )
+}
+
+fun ProductEntity.toProductModel(): ProductModel {
+    val transactionListModel = ArrayList<TransactionModel>()
+    transactions?.forEach { transactionListModel.add(it.toTransactionModel()) }
+    return ProductModel(
+        name = name,
+        transactions = transactionListModel,
+        totalSum = totalSum
+    )
+}
