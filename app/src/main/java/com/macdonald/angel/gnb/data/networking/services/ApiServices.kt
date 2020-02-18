@@ -6,10 +6,12 @@ import retrofit2.http.*
 
 interface ApiServices {
 
-    @GET("rates.json")
+    @GET("rates")
+    @Headers("Accept: application/json")
     suspend fun getRates(): Array<RateDomain>
 
-    @GET("transactions.json")
+    @GET("transactions")
+    @Headers("Accept: application/json")
     suspend fun getTransactions(): Array<TransactionDomain>
 
 }
