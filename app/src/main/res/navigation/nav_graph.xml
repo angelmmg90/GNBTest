@@ -7,7 +7,12 @@
 
     <fragment
         android:id="@+id/transactionsListFragment"
-        android:name="com.macdonald.angel.gnb.ui.TransactionsListFragment"
+        android:name="com.macdonald.angel.gnb.ui.features.transactionList.TransactionsListFragment"
         android:label="@string/transaction_list_fragment_name"
         tools:layout="@layout/fragment_transactions_list" />
+    <fragment
+        android:id="@+id/rateListFragment"
+        android:name="com.macdonald.angel.gnb.ui.features.rateList.RateListFragment"
+        android:label="fragment_rate_list"
+        tools:layout="@layout/fragment_rate_list" />
 </navigation>

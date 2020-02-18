@@ -1,4 +1,4 @@
-package com.macdonald.angel.gnb.ui.adapters
+package com.macdonald.angel.gnb.ui.features.transactionList.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

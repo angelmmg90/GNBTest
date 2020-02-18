@@ -1,4 +1,4 @@
-package com.macdonald.angel.gnb.ui
+package com.macdonald.angel.gnb.ui.features.transactionList
 
 interface TransactionsListContract {
     interface View {

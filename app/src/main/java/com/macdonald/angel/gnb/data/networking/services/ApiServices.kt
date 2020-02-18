@@ -1,6 +1,6 @@
 package com.macdonald.angel.gnb.data.networking.services
 
-import com.macdonald.angel.domain.RateDomain
+import com.macdonald.angel.domain.ratesUseCase.RateDomain
 import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 import retrofit2.http.*
 

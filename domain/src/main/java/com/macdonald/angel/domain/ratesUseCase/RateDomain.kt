@@ -1,4 +1,4 @@
-package com.macdonald.angel.domain
+package com.macdonald.angel.domain.ratesUseCase
 
 data class RateDomain (
     val from : String = "",

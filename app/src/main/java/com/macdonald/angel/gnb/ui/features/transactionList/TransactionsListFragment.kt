@@ -1,4 +1,4 @@
-package com.macdonald.angel.gnb.ui
+package com.macdonald.angel.gnb.ui.features.transactionList
 
 
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.TransactionModel
 
 import com.macdonald.angel.gnb.R
-import com.macdonald.angel.gnb.ui.adapters.TransactionsListAdapter
+import com.macdonald.angel.gnb.ui.features.transactionList.adapters.TransactionsListAdapter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_transactions_list.*
 import org.koin.androidx.scope.currentScope
@@ -21,7 +21,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * A simple [Fragment] subclass.
  */
-class TransactionsListFragment : Fragment(), TransactionsListContract.View {
+class TransactionsListFragment : Fragment(),
+    TransactionsListContract.View {
 
     private val viewModel: TransactionsListViewModel by currentScope.viewModel(this)
 

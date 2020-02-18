@@ -1,4 +1,4 @@
-package com.macdonald.angel.gnb.ui
+package com.macdonald.angel.gnb.ui.features.transactionList
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -51,19 +51,22 @@ class TransactionsListViewModel(
             when (response) {
                 is Response.Forbidden -> {
                     withContext(Dispatchers.Main) {
-                        _model.value = UiModel.Forbbiden
+                        _model.value =
+                            UiModel.Forbbiden
                     }
                 }
 
                 is Response.Error -> {
                     withContext(Dispatchers.Main) {
-                        _model.value = UiModel.ErrorGettingTrasactions
+                        _model.value =
+                            UiModel.ErrorGettingTrasactions
                     }
                 }
 
                 is Response.NetWorkError -> {
                     withContext(Dispatchers.Main) {
-                        _model.value = UiModel.NetWorkError
+                        _model.value =
+                            UiModel.NetWorkError
                     }
                 }
 
@@ -76,7 +79,10 @@ class TransactionsListViewModel(
                     }
 
                     withContext(Dispatchers.Main) {
-                        _model.value = UiModel.ShowTransactions(transactionsListModel)
+                        _model.value =
+                            UiModel.ShowTransactions(
+                                transactionsListModel
+                            )
                     }
                 }
             }

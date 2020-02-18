@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.features.transactionList.TransactionsListFragment">
+    tools:context=".ui.features.rateList.RateListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTransactions"
+        android:id="@+id/rvRates"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        tools:listitem="@layout/item_transaction"
+        tools:listitem="@layout/item_rate"
         />
 
 </FrameLayout>
