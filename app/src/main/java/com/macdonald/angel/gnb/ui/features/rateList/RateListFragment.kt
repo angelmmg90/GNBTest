@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.macdonald.angel.data.model.RateModel
+import com.macdonald.angel.data.model.TransactionModel
 
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.ui.features.transactionList.adapters.TransactionsListAdapter
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,6 +28,11 @@ class RateListFragment : Fragment(), RateListContract.View {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_rate_list, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.model.observe(this, Observer(::updateUi))
     }
 
 
