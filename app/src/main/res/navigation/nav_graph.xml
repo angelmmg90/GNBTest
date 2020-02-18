@@ -9,7 +9,17 @@
         android:id="@+id/transactionsListFragment"
         android:name="com.macdonald.angel.gnb.ui.features.transactionList.TransactionsListFragment"
         android:label="@string/transaction_list_fragment_name"
-        tools:layout="@layout/fragment_transactions_list" />
+        tools:layout="@layout/fragment_transactions_list">
+
+        <action
+            android:id="@+id/go_conversion_rate_info_action"
+            app:destination="@id/rateListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
     <fragment
         android:id="@+id/rateListFragment"
         android:name="com.macdonald.angel.gnb.ui.features.rateList.RateListFragment"

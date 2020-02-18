@@ -1,11 +1,14 @@
 package com.macdonald.angel.gnb
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 
 class MainActivity : AppCompatActivity() {
@@ -32,10 +35,26 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         setupActionBar(navController, appBarConfiguration)
-    }
 
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.transactionsListFragment -> {
+                    toolbar?.visibility = View.VISIBLE
+                }
+                R.id.rateListFragment -> {
+                    toolbar?.visibility = View.VISIBLE
+                }
+            }
+        }
+
+    }
     private fun setupActionBar(navController: NavController,
                                appBarConfig : AppBarConfiguration) {
         setupActionBarWithNavController(navController, appBarConfig)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.navHostFragment).navigateUp(appBarConfiguration)
     }
 }

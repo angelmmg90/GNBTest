@@ -4,6 +4,7 @@ interface TransactionsListContract {
     interface View {
         fun initializeViews()
         fun updateUi(model: TransactionsListViewModel.UiModel)
+        fun goToConversionRateInfo()
     }
 
     interface ViewModel {

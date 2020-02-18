@@ -2,12 +2,11 @@ package com.macdonald.angel.gnb.ui.features.transactionList
 
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.TransactionModel
 
@@ -24,6 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class TransactionsListFragment : Fragment(),
     TransactionsListContract.View {
 
+
     private val viewModel: TransactionsListViewModel by currentScope.viewModel(this)
 
     private lateinit var adapter: TransactionsListAdapter
@@ -33,6 +33,7 @@ class TransactionsListFragment : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_transactions_list, container, false)
     }
@@ -49,6 +50,27 @@ class TransactionsListFragment : Fragment(),
     }
     override fun initializeViews() {
         rvTransactions.layoutManager = LinearLayoutManager(context!!)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_info_conversion_rates, menu)
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.infoConversionRates -> {
+                goToConversionRateInfo()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun goToConversionRateInfo() {
+        val conversionRateInfoScreen =
+            TransactionsListFragmentDirections.goConversionRateInfoAction()
+        findNavController().navigate(conversionRateInfoScreen)
     }
 
     override fun updateUi(model: TransactionsListViewModel.UiModel) = when(model) {
