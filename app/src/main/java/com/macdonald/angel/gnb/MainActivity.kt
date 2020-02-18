@@ -10,6 +10,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,25 +39,39 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBar(navController, appBarConfiguration)
 
+        setupBottomNavMenu(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.transactionsListFragment -> {
                     toolbar?.visibility = View.VISIBLE
+                    bottomNavMenu.visibility = View.VISIBLE
                 }
                 R.id.rateListFragment -> {
                     toolbar?.visibility = View.VISIBLE
+                    bottomNavMenu.visibility = View.GONE
+                }
+                R.id.productListFragment -> {
+                    toolbar?.visibility = View.VISIBLE
+                    bottomNavMenu.visibility = View.VISIBLE
                 }
             }
         }
 
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.navHostFragment).navigateUp(appBarConfiguration)
+    }
+
     private fun setupActionBar(navController: NavController,
                                appBarConfig : AppBarConfiguration) {
         setupActionBarWithNavController(navController, appBarConfig)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.navHostFragment).navigateUp(appBarConfiguration)
+    private fun setupBottomNavMenu(navController: NavController) {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavMenu)
+        bottomNav?.setupWithNavController(navController)
     }
+
 }
