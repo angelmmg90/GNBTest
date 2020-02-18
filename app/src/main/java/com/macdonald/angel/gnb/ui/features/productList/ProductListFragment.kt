@@ -1,4 +1,4 @@
-package com.macdonald.angel.gnb.ui.features
+package com.macdonald.angel.gnb.ui.features.productList
 
 
 import android.os.Bundle

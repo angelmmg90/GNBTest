@@ -25,4 +25,9 @@
         android:name="com.macdonald.angel.gnb.ui.features.rateList.RateListFragment"
         android:label="@string/rate_list_fragment_name"
         tools:layout="@layout/fragment_rate_list" />
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.macdonald.angel.gnb.ui.features.productList.ProductListFragment"
+        android:label="@string/product_list_fragment_name"
+        tools:layout="@layout/fragment_product_list" />
 </navigation>

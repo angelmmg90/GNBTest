@@ -7,4 +7,5 @@
     <string name="not_get_rates">Can not get any rate</string>
     <string name="transaction_list_fragment_name">Transaction List</string>
     <string name="rate_list_fragment_name">Rate List</string>
+    <string name="product_list_fragment_name">Product} List</string>
 </resources>
