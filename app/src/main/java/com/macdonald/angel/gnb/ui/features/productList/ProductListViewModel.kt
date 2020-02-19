@@ -51,7 +51,7 @@ class ProductListViewModel(
         }
     }
 
-    override fun getAllProducts() {
+    override fun getAllProductsFromLocal() {
         lateinit var productData: List<ProductModel>
 
         getProductsJob = CoroutineScope(Dispatchers.IO).launch {

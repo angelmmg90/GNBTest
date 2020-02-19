@@ -43,6 +43,8 @@ class ProductListFragment : Fragment(), ProductListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
+        //TODO uncomment when the offline mode is available
+        //viewModel.getAllProductsFromLocal()
         viewModel.getProductFromTransactions()
     }
 
