@@ -58,19 +58,25 @@ fun ProductEntity.toProductModel(): ProductModel {
 
 fun ArrayList<ProductModel>.getProductsFromTransactionsList(transactionList: ArrayList<TransactionModel>):
         ArrayList<ProductModel> {
-    if(this.isEmpty()) {
-        transactionList.forEach {transaction->
-            this.forEach{product->
-                var productNotAdded = product.name != transaction.product
-                if(productNotAdded){
-                    var newProduct = ProductModel(
-                        name = transaction.product
-                    )
 
+        transactionList.forEach {transaction->
+            lateinit var newProduct: ProductModel
+            if(this.isEmpty()) {
+                newProduct = ProductModel(
+                    name = transaction.product
+                )
+                this.add(newProduct)
+            }else{
+                newProduct = ProductModel(
+                    name = transaction.product
+                )
+                var productNotAdded = !this.contains(newProduct)
+                if(productNotAdded){
                     this.add(newProduct)
                 }
             }
+
         }
-    }
+
     return this
 }
