@@ -28,10 +28,10 @@ android {
 
         productFlavors {
             dev {
-                buildConfigField 'String', 'BASEURL', '"http://10.121.118.63:3000/"'
+                buildConfigField 'String', 'BASEURL', '"https://192.168.0.104:3000/"'
             }
             pre {
-                buildConfigField 'String', 'BASEURL', '"http://quiet-stone-2094.herokuapp.com/"'
+                buildConfigField 'String', 'BASEURL', '"https://quiet-stone-2094.herokuapp.com/"'
             }
             pro {
             }

@@ -45,7 +45,6 @@ class TransactionsListFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
-        //TODO we need to do the logic when the user can not get any data locally
         viewModel.getAllTransactionsFromLocal()
     }
     override fun initializeViews() {
@@ -101,7 +100,7 @@ class TransactionsListFragment : Fragment(),
             canNotGetAnyTransaction()
         }
         TransactionsListViewModel.UiModel.NotTransactionDataFoundLocally -> {
-            canNotGetAnyTransaction()
+            viewModel.getAllTransactionsFromRemote()
         }
         TransactionsListViewModel.UiModel.ErrorGettingsTransactions -> {
             canNotGetAnyTransaction()
