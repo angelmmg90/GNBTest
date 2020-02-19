@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.macdonald.angel.gnb.data.database.converters.TransactionListTypeConverter
 import com.macdonald.angel.gnb.data.database.daos.ProductDAO
 import com.macdonald.angel.gnb.data.database.daos.RateDAO
 import com.macdonald.angel.gnb.data.database.daos.TransactionDAO
@@ -20,6 +22,7 @@ import com.macdonald.angel.gnb.data.database.entities.TransactionEntity
     version = 1,
     exportSchema = false
 )
+@TypeConverters(TransactionListTypeConverter::class)
 abstract class GNBLocalDatabase : RoomDatabase() {
     companion object {
         private const val DATABASE_NAME = "gnb-db"
