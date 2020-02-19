@@ -9,8 +9,8 @@ interface ProductListContract {
     }
 
     interface ViewModel {
-        fun getAllProducts()
-        fun extractProductFromTransactions()
+        fun getAllProductsFromLocal()
+        fun getProductFromTransactions()
         fun insertAllProducts(products: List<ProductModel>)
     }
 
