@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@id/transactionsListFragment"
-            android:icon="@drawable/ic_transaction_list"
-            android:title="@string/transaction_list_fragment_name" />
-
-    <item
             android:id="@id/productListFragment"
             android:icon="@drawable/ic_product_list"
             android:title="@string/product_list_fragment_name" />
+
+    <item
+        android:id="@id/transactionsListFragment"
+        android:icon="@drawable/ic_transaction_list"
+        android:title="@string/transaction_list_fragment_name" />
 
 </menu>
