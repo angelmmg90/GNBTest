@@ -8,7 +8,8 @@ interface TransactionsListContract {
     }
 
     interface ViewModel {
-        fun getAllTransactions()
+        fun getAllTransactionsFromRemote()
+        fun getAllTransactionsFromLocal()
     }
 
 }

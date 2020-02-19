@@ -41,7 +41,30 @@ class TransactionsListViewModel(
         }
     }
 
-    override fun getAllTransactions() {
+    override fun getAllTransactionsFromLocal() {
+        lateinit var transactionData: List<TransactionModel>
+
+        getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                transactionData = transactionsUserCase.getT()
+            }
+            if (transactionData.isNullOrEmpty()) {
+                withContext(Dispatchers.Main) {
+                    _model.value =
+                        UiModel.NotProductDataFoundLocally
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    _model.value =
+                        UiModel.ShowProducts(
+                            transactionData
+                        )
+                }
+            }
+        }
+    }
+
+    override fun getAllTransactionsFromRemote() {
         lateinit var response: Response<Array<TransactionDomain>>
 
         getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {

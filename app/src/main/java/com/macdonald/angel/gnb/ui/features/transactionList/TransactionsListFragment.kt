@@ -46,7 +46,7 @@ class TransactionsListFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
-        viewModel.getAllTransactions()
+        viewModel.getAllTransactionsFromRemote()
     }
     override fun initializeViews() {
         rvTransactions.layoutManager = LinearLayoutManager(context!!)
