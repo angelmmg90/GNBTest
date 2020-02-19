@@ -5,6 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="not_get_transactions">Can not get any transaction</string>
     <string name="not_get_rates">Can not get any rate</string>
+    <string name="not_get_products">Can not get any product</string>
     <string name="transaction_list_fragment_name">Transaction List</string>
     <string name="rate_list_fragment_name">Rate List</string>
     <string name="product_list_fragment_name">Product} List</string>
