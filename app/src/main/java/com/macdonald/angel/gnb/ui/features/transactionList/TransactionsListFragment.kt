@@ -23,7 +23,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class TransactionsListFragment : Fragment(),
     TransactionsListContract.View {
 
-
     private val viewModel: TransactionsListViewModel by currentScope.viewModel(this)
 
     private lateinit var adapter: TransactionsListAdapter
@@ -46,7 +45,8 @@ class TransactionsListFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
-        viewModel.getAllTransactionsFromRemote()
+        //TODO we need to do the logic when the user can not get any data locally
+        viewModel.getAllTransactionsFromLocal()
     }
     override fun initializeViews() {
         rvTransactions.layoutManager = LinearLayoutManager(context!!)
@@ -92,32 +92,30 @@ class TransactionsListFragment : Fragment(),
             rvTransactions.adapter = adapter
         }
         TransactionsListViewModel.UiModel.Forbbiden -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_transactions),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
+            canNotGetAnyTransaction()
         }
         TransactionsListViewModel.UiModel.ErrorGettingTrasactions -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_transactions),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
+            canNotGetAnyTransaction()
         }
         TransactionsListViewModel.UiModel.NetWorkError -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_transactions),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
+            canNotGetAnyTransaction()
         }
+        TransactionsListViewModel.UiModel.NotTransactionDataFoundLocally -> {
+            canNotGetAnyTransaction()
+        }
+        TransactionsListViewModel.UiModel.ErrorGettingsTransactions -> {
+            canNotGetAnyTransaction()
+        }
+    }
+
+    override fun canNotGetAnyTransaction() {
+        val toast = Toasty.info(
+            context!!,
+            getString(R.string.not_get_transactions),
+            Toast.LENGTH_LONG,
+            true
+        )
+        toast.show()
     }
 
 

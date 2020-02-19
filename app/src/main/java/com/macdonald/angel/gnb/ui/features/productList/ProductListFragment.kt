@@ -44,7 +44,7 @@ class ProductListFragment : Fragment(), ProductListContract.View {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
         //TODO uncomment when the offline mode is available
-        //viewModel.getAllProductsFromLocal()
+        // viewModel.getAllProductsFromLocal()
         viewModel.getProductFromTransactions()
     }
 

@@ -113,6 +113,8 @@ class ProductListViewModel(
                         transactionsListModel.add(it.toTransactionModel())
                     }
 
+                    transactionsUseCases.persistTransactionsIntoDatabase(transactionsListModel)
+
                     withContext(Dispatchers.Main) {
                         var productsFromTransactionList =
                             productList.getProductsFromTransactionsList(transactionsListModel)

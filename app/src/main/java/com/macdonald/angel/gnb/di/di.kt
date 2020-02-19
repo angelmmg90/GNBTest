@@ -6,10 +6,12 @@ import com.macdonald.angel.data.repositories.RatesRepository
 import com.macdonald.angel.data.repositories.TransactionsRepository
 import com.macdonald.angel.data.sources.ProductsLocalDatasource
 import com.macdonald.angel.data.sources.RatesRemoteDatasource
+import com.macdonald.angel.data.sources.TransactionsLocalDatasource
 import com.macdonald.angel.data.sources.TransactionsRemoteDatasource
 import com.macdonald.angel.gnb.data.database.GNBLocalDatabase
 import com.macdonald.angel.gnb.data.networking.datasources.products.ConcretionProductLocalDatasource
 import com.macdonald.angel.gnb.data.networking.datasources.rates.ConcretionRatesRemoteDatasource
+import com.macdonald.angel.gnb.data.networking.datasources.transactions.ConcretionTransactionsLocalDatasource
 import com.macdonald.angel.gnb.data.networking.datasources.transactions.ConcretionTransactionsRemoteDatasource
 import com.macdonald.angel.gnb.ui.features.productList.ProductListFragment
 import com.macdonald.angel.gnb.ui.features.productList.ProductListViewModel
@@ -42,12 +44,13 @@ fun Application.initDI() {
 private val appModule = module {
     single { GNBLocalDatabase.build(get()) }
     single<TransactionsRemoteDatasource> { ConcretionTransactionsRemoteDatasource(get()) }
+    single<TransactionsLocalDatasource> { ConcretionTransactionsLocalDatasource(get()) }
     single<RatesRemoteDatasource> { ConcretionRatesRemoteDatasource(get()) }
     single<ProductsLocalDatasource> { ConcretionProductLocalDatasource(get()) }
 }
 
 private val dataModule = module {
-    factory { TransactionsRepository(get()) }
+    factory { TransactionsRepository(get(), get()) }
     factory { RatesRepository(get()) }
     factory { ProductsRepository(get()) }
 }
