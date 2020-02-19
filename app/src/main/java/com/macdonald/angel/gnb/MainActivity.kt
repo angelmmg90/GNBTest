@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         val topLevelDestinations = hashSetOf<Int>() //Add the main destinations
         topLevelDestinations.add(R.id.transactionsListFragment)
+        topLevelDestinations.add(R.id.productListFragment)
 
         appBarConfiguration = AppBarConfiguration.Builder(topLevelDestinations)
             .build()
