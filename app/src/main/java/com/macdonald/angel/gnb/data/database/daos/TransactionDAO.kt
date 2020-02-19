@@ -1,11 +1,16 @@
 package com.macdonald.angel.gnb.data.database.daos
 
 import androidx.room.*
-import com.macdonald.angel.gnb.data.database.entities.ProductEntity
 import com.macdonald.angel.gnb.data.database.entities.TransactionEntity
 
 @Dao
 interface TransactionDAO {
+
+    @Transaction
+    suspend fun insertIncomingTransactions(incomingTransactions: List<TransactionEntity>){
+        deleteAllTransactions()
+        inserTransactions(incomingTransactions)
+    }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertTransaction(rate: TransactionEntity)
@@ -14,7 +19,10 @@ interface TransactionDAO {
     suspend fun inserTransactions(transactions: List<TransactionEntity>)
 
     @Delete
-    fun deleteTransaction(rate: TransactionEntity)
+    fun deleteTransaction(transaction: TransactionEntity)
+
+    @Query("DELETE FROM transaction_entity")
+    fun deleteAllTransactions()
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateTransaction(rate: TransactionEntity)

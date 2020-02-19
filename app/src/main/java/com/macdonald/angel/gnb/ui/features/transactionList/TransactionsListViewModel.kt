@@ -29,6 +29,9 @@ class TransactionsListViewModel(
         object Forbbiden : UiModel()
         object ErrorGettingTrasactions : UiModel()
         object NetWorkError : UiModel()
+
+        object NotTransactionDataFoundLocally : UiModel()
+        object ErrorGettingsTransactions : UiModel()
     }
 
     init {
@@ -46,17 +49,17 @@ class TransactionsListViewModel(
 
         getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
-                transactionData = transactionsUserCase.getT()
+                transactionData = transactionsUserCase.getTransactionsFromLocal()
             }
             if (transactionData.isNullOrEmpty()) {
                 withContext(Dispatchers.Main) {
                     _model.value =
-                        UiModel.NotProductDataFoundLocally
+                        UiModel.NotTransactionDataFoundLocally
                 }
             } else {
                 withContext(Dispatchers.Main) {
                     _model.value =
-                        UiModel.ShowProducts(
+                        UiModel.ShowTransactions(
                             transactionData
                         )
                 }
