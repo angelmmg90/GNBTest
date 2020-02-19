@@ -1,4 +1,4 @@
-package com.macdonald.angel.gnb.ui.features.productList
+package com.macdonald.angel.gnb.ui.features.productList.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

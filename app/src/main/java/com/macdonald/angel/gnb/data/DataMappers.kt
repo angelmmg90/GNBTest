@@ -55,3 +55,22 @@ fun ProductEntity.toProductModel(): ProductModel {
         totalSum = totalSum
     )
 }
+
+fun ArrayList<ProductModel>.getProductsFromTransactionsList(transactionList: ArrayList<TransactionModel>):
+        ArrayList<ProductModel> {
+    if(this.isEmpty()) {
+        transactionList.forEach {transaction->
+            this.forEach{product->
+                var productNotAdded = product.name != transaction.product
+                if(productNotAdded){
+                    var newProduct = ProductModel(
+                        name = transaction.product
+                    )
+
+                    this.add(newProduct)
+                }
+            }
+        }
+    }
+    return this
+}
