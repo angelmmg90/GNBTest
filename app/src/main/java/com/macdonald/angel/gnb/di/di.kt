@@ -75,8 +75,10 @@ private val scopesModule = module {
 
     scope((named<ProductListFragment>())) {
         scoped { ProductsUseCases(get()) }
+        scoped { TransactionsUseCases(get()) }
         viewModel {
             ProductListViewModel(
+                get(),
                 get(),
                 get()
             )
