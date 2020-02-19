@@ -35,7 +35,7 @@ class ProductListViewModel(
         class InsertProducts(val productList: List<ProductModel>) : UiModel()
 
         object Forbbiden : UiModel()
-        object NotFoundProductData : UiModel()
+        object NotProductDataFoundLocally : UiModel()
         object NetWorkError : UiModel()
         object ErrorInsertingProducts : UiModel()
         object ErrorGettingsTransactions : UiModel()
@@ -61,7 +61,7 @@ class ProductListViewModel(
             if (productData.isNullOrEmpty()) {
                 withContext(Dispatchers.Main) {
                     _model.value =
-                        UiModel.NotFoundProductData
+                        UiModel.NotProductDataFoundLocally
                 }
             } else {
                 withContext(Dispatchers.Main) {
@@ -75,9 +75,9 @@ class ProductListViewModel(
 
     }
 
-    override fun extractProductFromTransactions() {
+    override fun getProductFromTransactions() {
         lateinit var response: Response<Array<TransactionDomain>>
-        lateinit var productList: ArrayList<ProductModel>
+        var productList: ArrayList<ProductModel> = ArrayList()
 
         getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
