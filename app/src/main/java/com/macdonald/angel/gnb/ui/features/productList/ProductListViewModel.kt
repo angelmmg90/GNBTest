@@ -19,9 +19,9 @@ class ProductListViewModel(
     private val productUseCases: ProductsUseCases,
     private val transactionsUseCases: TransactionsUseCases
 ):ScopedViewModel(), ProductListContract.ViewModel {
-
     private lateinit var getProductsJob: Job
-    private lateinit var getTransactionsJob: Job
+    private lateinit var getRemoteTransactionsJob: Job
+    private lateinit var getLocalTransactionsJob: Job
     private lateinit var insertProductsJob: Job
 
     private val _model = MutableLiveData<UiModel>()
@@ -38,7 +38,8 @@ class ProductListViewModel(
         object NotProductDataFoundLocally : UiModel()
         object NetWorkError : UiModel()
         object ErrorInsertingProducts : UiModel()
-        object ErrorGettingsTransactions : UiModel()
+        object ErrorGettingTransactions : UiModel()
+        object ErrorGettingLocalTransactions : UiModel()
     }
 
     init {
@@ -48,6 +49,15 @@ class ProductListViewModel(
     fun cancelJobs() {
         if (::getProductsJob.isInitialized && getProductsJob.isActive) {
             getProductsJob.cancel()
+        }
+        if (::getRemoteTransactionsJob.isInitialized && getRemoteTransactionsJob.isActive) {
+            getRemoteTransactionsJob.cancel()
+        }
+        if (::getLocalTransactionsJob.isInitialized && getLocalTransactionsJob.isActive) {
+            getLocalTransactionsJob.cancel()
+        }
+        if (::insertProductsJob.isInitialized && insertProductsJob.isActive) {
+            insertProductsJob.cancel()
         }
     }
 
@@ -75,11 +85,40 @@ class ProductListViewModel(
 
     }
 
-    override fun getProductFromTransactions() {
+    override fun getProductsFromLocalTransactions() {
+        lateinit var transactionsData: List<TransactionModel>
+        var productList: ArrayList<ProductModel> = ArrayList()
+
+        getLocalTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                transactionsData = transactionsUseCases.getTransactionsFromLocal()
+            }
+            if (transactionsData.isNullOrEmpty()) {
+                withContext(Dispatchers.Main) {
+                    _model.value =
+                        UiModel.ErrorGettingLocalTransactions
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    var productsFromTransactionList =
+                        productList.getProductsFromTransactionsList(ArrayList(transactionsData))
+
+                    _model.value =
+                        UiModel.InsertProducts(
+                            productsFromTransactionList
+                        )
+                }
+            }
+        }
+
+    }
+
+
+    override fun getProductsFromRemoteTransactions() {
         lateinit var response: Response<Array<TransactionDomain>>
         var productList: ArrayList<ProductModel> = ArrayList()
 
-        getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
+        getRemoteTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
                 response = transactionsUseCases.getTransactionsFromRemote()
             }
@@ -94,7 +133,7 @@ class ProductListViewModel(
                 is Response.Error -> {
                     withContext(Dispatchers.Main) {
                         _model.value =
-                            UiModel.ErrorGettingsTransactions
+                            UiModel.ErrorGettingTransactions
                     }
                 }
 

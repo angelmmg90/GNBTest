@@ -43,9 +43,7 @@ class ProductListFragment : Fragment(), ProductListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
-        //TODO uncomment when the offline mode is available
-        // viewModel.getAllProductsFromLocal()
-        viewModel.getProductFromTransactions()
+        viewModel.getAllProductsFromLocal()
     }
 
     override fun initializeViews() {
@@ -83,7 +81,7 @@ class ProductListFragment : Fragment(), ProductListContract.View {
             toast.show()
         }
         ProductListViewModel.UiModel.NotProductDataFoundLocally -> {
-            viewModel.getProductFromTransactions()
+            viewModel.getProductsFromLocalTransactions()
         }
         ProductListViewModel.UiModel.NetWorkError -> {
             val toast = Toasty.info(
@@ -104,7 +102,7 @@ class ProductListFragment : Fragment(), ProductListContract.View {
             toast.show()
 
         }
-        ProductListViewModel.UiModel.ErrorGettingsTransactions -> {
+        ProductListViewModel.UiModel.ErrorGettingTransactions -> {
             val toast = Toasty.info(
                 context!!,
                 getString(R.string.not_get_products),
@@ -113,6 +111,9 @@ class ProductListFragment : Fragment(), ProductListContract.View {
             )
             toast.show()
 
+        }
+        ProductListViewModel.UiModel.ErrorGettingLocalTransactions -> {
+            viewModel.getProductsFromRemoteTransactions()
         }
     }
 
