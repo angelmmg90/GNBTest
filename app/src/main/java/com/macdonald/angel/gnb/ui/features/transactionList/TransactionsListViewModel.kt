@@ -104,6 +104,8 @@ class TransactionsListViewModel(
                         transactionsListModel.add(it.toTransactionModel())
                     }
 
+                    transactionsUserCase.persistTransactionsIntoDatabase(transactionsListModel)
+
                     withContext(Dispatchers.Main) {
                         _model.value =
                             UiModel.ShowTransactions(

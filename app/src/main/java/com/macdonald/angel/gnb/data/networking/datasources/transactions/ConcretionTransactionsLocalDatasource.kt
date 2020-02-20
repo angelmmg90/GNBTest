@@ -17,6 +17,7 @@ class ConcretionTransactionsLocalDatasource(private var db: GNBLocalDatabase) : 
                 transactionsEntityList.add(it.toTransactionEntity())
             }
 
+            db.productDAO().deleteAllProducts()
             db.transactionDAO().insertIncomingTransactions(transactionsEntityList)
             return true
         } catch (e: java.lang.Exception) {
