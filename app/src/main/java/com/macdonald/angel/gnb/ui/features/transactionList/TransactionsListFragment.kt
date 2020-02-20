@@ -60,13 +60,13 @@ class TransactionsListFragment : Fragment(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.infoConversionRates -> {
-                goToConversionRateInfo()
+                goToRateInfo()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun goToConversionRateInfo() {
+    override fun goToRateInfo() {
         val conversionRateInfoScreen =
             TransactionsListFragmentDirections.goConversionRateInfoAction()
         findNavController().navigate(conversionRateInfoScreen)
@@ -91,23 +91,23 @@ class TransactionsListFragment : Fragment(),
             rvTransactions.adapter = adapter
         }
         TransactionsListViewModel.UiModel.Forbbiden -> {
-            canNotGetAnyTransaction()
+            canNotGetAnyData()
         }
         TransactionsListViewModel.UiModel.ErrorGettingTrasactions -> {
-            canNotGetAnyTransaction()
+            canNotGetAnyData()
         }
         TransactionsListViewModel.UiModel.NetWorkError -> {
-            canNotGetAnyTransaction()
+            canNotGetAnyData()
         }
         TransactionsListViewModel.UiModel.NotTransactionDataFoundLocally -> {
             viewModel.getAllTransactionsFromRemote()
         }
         TransactionsListViewModel.UiModel.ErrorGettingsTransactions -> {
-            canNotGetAnyTransaction()
+            canNotGetAnyData()
         }
     }
 
-    override fun canNotGetAnyTransaction() {
+    override fun canNotGetAnyData() {
         val toast = Toasty.info(
             context!!,
             getString(R.string.not_get_transactions),

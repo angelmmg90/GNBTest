@@ -6,6 +6,7 @@ interface ProductListContract {
     interface View {
         fun initializeViews()
         fun updateUi(model: ProductListViewModel.UiModel)
+        fun canNotGetAnyData()
     }
 
     interface ViewModel {

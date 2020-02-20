@@ -72,49 +72,33 @@ class ProductListFragment : Fragment(), ProductListContract.View {
             viewModel.insertAllProducts(model.productList)
         }
         ProductListViewModel.UiModel.Forbbiden -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_products),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
+            canNotGetAnyData()
         }
         ProductListViewModel.UiModel.NotProductDataFoundLocally -> {
             viewModel.getProductsFromLocalTransactions()
         }
         ProductListViewModel.UiModel.NetWorkError -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_products),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
+            canNotGetAnyData()
         }
         ProductListViewModel.UiModel.ErrorInsertingProducts -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_products),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
-
+            canNotGetAnyData()
         }
         ProductListViewModel.UiModel.ErrorGettingTransactions -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_products),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
-
+            canNotGetAnyData()
         }
         ProductListViewModel.UiModel.ErrorGettingLocalTransactions -> {
             viewModel.getProductsFromRemoteTransactions()
         }
+    }
+
+    override fun canNotGetAnyData() {
+        val toast = Toasty.info(
+            context!!,
+            getString(R.string.not_get_products),
+            Toast.LENGTH_LONG,
+            true
+        )
+        toast.show()
     }
 
 

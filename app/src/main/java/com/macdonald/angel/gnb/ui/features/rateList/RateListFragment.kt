@@ -70,35 +70,27 @@ class RateListFragment : Fragment(), RateListContract.View {
             rvRates.adapter = adapter
         }
         RateListViewModel.UiModel.Forbbiden -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_rates),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
+            canNotGetAnyData()
         }
         RateListViewModel.UiModel.ErrorGettingRates -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_rates),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
+            canNotGetAnyData()
         }
         RateListViewModel.UiModel.NetWorkError -> {
-            val toast = Toasty.info(
-                context!!,
-                getString(R.string.not_get_rates),
-                Toast.LENGTH_LONG,
-                true
-            )
-            toast.show()
+            canNotGetAnyData()
         }
         RateListViewModel.UiModel.NotRateDataFoundLocally -> {
             viewModel.getAllRatesFromRemote()
         }
+    }
+
+    override fun canNotGetAnyData() {
+        val toast = Toasty.info(
+            context!!,
+            getString(R.string.not_get_rates),
+            Toast.LENGTH_LONG,
+            true
+        )
+        toast.show()
     }
 
 }
