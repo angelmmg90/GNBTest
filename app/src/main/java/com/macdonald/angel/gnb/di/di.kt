@@ -4,12 +4,10 @@ import android.app.Application
 import com.macdonald.angel.data.repositories.ProductsRepository
 import com.macdonald.angel.data.repositories.RatesRepository
 import com.macdonald.angel.data.repositories.TransactionsRepository
-import com.macdonald.angel.data.sources.ProductsLocalDatasource
-import com.macdonald.angel.data.sources.RatesRemoteDatasource
-import com.macdonald.angel.data.sources.TransactionsLocalDatasource
-import com.macdonald.angel.data.sources.TransactionsRemoteDatasource
+import com.macdonald.angel.data.sources.*
 import com.macdonald.angel.gnb.data.database.GNBLocalDatabase
 import com.macdonald.angel.gnb.data.networking.datasources.products.ConcretionProductLocalDatasource
+import com.macdonald.angel.gnb.data.networking.datasources.rates.ConcretionRateLocalDatasource
 import com.macdonald.angel.gnb.data.networking.datasources.rates.ConcretionRatesRemoteDatasource
 import com.macdonald.angel.gnb.data.networking.datasources.transactions.ConcretionTransactionsLocalDatasource
 import com.macdonald.angel.gnb.data.networking.datasources.transactions.ConcretionTransactionsRemoteDatasource
@@ -45,13 +43,14 @@ private val appModule = module {
     single { GNBLocalDatabase.build(get()) }
     single<TransactionsRemoteDatasource> { ConcretionTransactionsRemoteDatasource(get()) }
     single<TransactionsLocalDatasource> { ConcretionTransactionsLocalDatasource(get()) }
+    single<RatesLocalDatasource> { ConcretionRateLocalDatasource(get()) }
     single<RatesRemoteDatasource> { ConcretionRatesRemoteDatasource(get()) }
     single<ProductsLocalDatasource> { ConcretionProductLocalDatasource(get()) }
 }
 
 private val dataModule = module {
     factory { TransactionsRepository(get(), get()) }
-    factory { RatesRepository(get()) }
+    factory { RatesRepository(get(), get()) }
     factory { ProductsRepository(get()) }
 }
 

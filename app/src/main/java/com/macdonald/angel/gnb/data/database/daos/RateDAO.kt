@@ -2,15 +2,28 @@ package com.macdonald.angel.gnb.data.database.daos
 
 import androidx.room.*
 import com.macdonald.angel.gnb.data.database.entities.RateEntity
+import com.macdonald.angel.gnb.data.database.entities.TransactionEntity
 
 @Dao
 interface RateDAO {
 
+    @Transaction
+    suspend fun insertIncomingRates(incomingRates: List<RateEntity>){
+        deleteAllRates()
+        insertRates(incomingRates)
+    }
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertRate(rate: RateEntity)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertRates(rates: List<RateEntity>)
+
     @Delete
     fun deleteRate(rate: RateEntity)
+
+    @Query("DELETE FROM transaction_entity")
+    fun deleteAllRates()
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateRate(rate: RateEntity)

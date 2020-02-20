@@ -29,6 +29,7 @@ class RateListViewModel(
         object Forbbiden : UiModel()
         object ErrorGettingRates : UiModel()
         object NetWorkError : UiModel()
+        object NotRateDataFoundLocally : UiModel()
     }
 
     init {
@@ -41,7 +42,31 @@ class RateListViewModel(
         }
     }
 
-    override fun getAllRates() {
+    override fun getAllRatesFromLocal() {
+        lateinit var ratesData: List<RateModel>
+
+        getRatesJob = CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                ratesData = ratesUserCase.getRatesFromLocal()
+            }
+            if (ratesData.isNullOrEmpty()) {
+                withContext(Dispatchers.Main) {
+                    _model.value =
+                        UiModel.NotRateDataFoundLocally
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    _model.value =
+                        UiModel.ShowRates(
+                            ratesData
+                        )
+                }
+            }
+        }
+    }
+
+
+    override fun getAllRatesFromRemote() {
         lateinit var response: Response<Array<RateDomain>>
 
         getRatesJob = CoroutineScope(Dispatchers.IO).launch {
@@ -77,6 +102,8 @@ class RateListViewModel(
                     rawListRates.forEach {
                         ratesListModel.add(it.toRateModel())
                     }
+
+                    ratesUserCase.persistRatesIntoDatabase(ratesListModel)
 
                     withContext(Dispatchers.Main) {
                         _model.value =

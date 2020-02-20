@@ -43,7 +43,7 @@ class RateListFragment : Fragment(), RateListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
-        viewModel.getAllRates()
+        viewModel.getAllRatesFromLocal()
     }
 
 
@@ -95,6 +95,9 @@ class RateListFragment : Fragment(), RateListContract.View {
                 true
             )
             toast.show()
+        }
+        RateListViewModel.UiModel.NotRateDataFoundLocally -> {
+            viewModel.getAllRatesFromRemote()
         }
     }
 

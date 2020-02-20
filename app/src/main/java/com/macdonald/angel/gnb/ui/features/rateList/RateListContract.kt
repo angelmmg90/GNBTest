@@ -7,7 +7,8 @@ interface RateListContract {
     }
 
     interface ViewModel {
-        fun getAllRates()
+        fun getAllRatesFromRemote()
+        fun getAllRatesFromLocal()
     }
 
 }

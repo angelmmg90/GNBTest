@@ -6,6 +6,7 @@ import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.domain.ratesUseCase.RateDomain
 import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 import com.macdonald.angel.gnb.data.database.entities.ProductEntity
+import com.macdonald.angel.gnb.data.database.entities.RateEntity
 import com.macdonald.angel.gnb.data.database.entities.TransactionEntity
 
 fun TransactionDomain.toTransactionModel(): TransactionModel =
@@ -34,6 +35,20 @@ fun RateDomain.toRateModel(): RateModel =
         from,
         to,
         rate
+    )
+
+fun RateEntity.toRateModel(): RateModel =
+    RateModel(
+        from,
+        to,
+        rate
+    )
+
+fun RateModel.toRateEntity(): RateEntity =
+    RateEntity(
+        from = from,
+        to = to,
+        rate = rate
     )
 
 fun ProductModel.toProductEntity(): ProductEntity {

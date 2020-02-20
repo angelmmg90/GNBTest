@@ -20,8 +20,7 @@ class ProductListViewModel(
     private val transactionsUseCases: TransactionsUseCases
 ):ScopedViewModel(), ProductListContract.ViewModel {
     private lateinit var getProductsJob: Job
-    private lateinit var getRemoteTransactionsJob: Job
-    private lateinit var getLocalTransactionsJob: Job
+    private lateinit var getTransactionsJob: Job
     private lateinit var insertProductsJob: Job
 
     private val _model = MutableLiveData<UiModel>()
@@ -50,12 +49,10 @@ class ProductListViewModel(
         if (::getProductsJob.isInitialized && getProductsJob.isActive) {
             getProductsJob.cancel()
         }
-        if (::getRemoteTransactionsJob.isInitialized && getRemoteTransactionsJob.isActive) {
-            getRemoteTransactionsJob.cancel()
+        if (::getTransactionsJob.isInitialized && getTransactionsJob.isActive) {
+            getTransactionsJob.cancel()
         }
-        if (::getLocalTransactionsJob.isInitialized && getLocalTransactionsJob.isActive) {
-            getLocalTransactionsJob.cancel()
-        }
+
         if (::insertProductsJob.isInitialized && insertProductsJob.isActive) {
             insertProductsJob.cancel()
         }
@@ -89,7 +86,7 @@ class ProductListViewModel(
         lateinit var transactionsData: List<TransactionModel>
         var productList: ArrayList<ProductModel> = ArrayList()
 
-        getLocalTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
+        getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
                 transactionsData = transactionsUseCases.getTransactionsFromLocal()
             }
@@ -118,7 +115,7 @@ class ProductListViewModel(
         lateinit var response: Response<Array<TransactionDomain>>
         var productList: ArrayList<ProductModel> = ArrayList()
 
-        getRemoteTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
+        getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
                 response = transactionsUseCases.getTransactionsFromRemote()
             }
