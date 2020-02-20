@@ -64,7 +64,7 @@ class ProductListViewModel(
 
         getProductsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
-                productData = productUseCases.getProductsNamesFromLocal()
+                productData = productUseCases.getProductsModelFromLocal()
             }
             if (productData.isNullOrEmpty()) {
                 withContext(Dispatchers.Main) {

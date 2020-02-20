@@ -101,7 +101,7 @@ fun ProductEntity.toProductDetailsModel(): ProductDetailsModel {
     return ProductDetailsModel(
         name = name,
         transactions = transactionListModel,
-        totalSum = totalSum
+        totalSum = totalSum!!
     )
 }
 

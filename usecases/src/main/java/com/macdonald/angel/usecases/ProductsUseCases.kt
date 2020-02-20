@@ -7,11 +7,11 @@ import com.macdonald.angel.data.repositories.ProductsRepository
 class ProductsUseCases(
     private val productsRepository: ProductsRepository
 ) {
-    suspend fun getProductsFromLocal() : List<ProductDetailsModel> =
-        productsRepository.getProductsFromLocal()
+    suspend fun getProductsDetailFromLocal() : List<ProductDetailsModel> =
+        productsRepository.getProductsDetailFromLocal()
 
-    suspend fun getProductsNamesFromLocal() : List<ProductModel> =
-        productsRepository.getProductsNamesFromLocal()
+    suspend fun getProductsModelFromLocal() : List<ProductModel> =
+        productsRepository.getProductsModelFromLocal()
 
 
     suspend fun persistProductsIntoDatabase(products: List<ProductDetailsModel>) : Boolean =

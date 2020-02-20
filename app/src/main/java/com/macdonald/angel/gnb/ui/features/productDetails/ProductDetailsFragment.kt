@@ -57,7 +57,7 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
     }
 
     override fun initializeViews() {
-        rvProducts.layoutManager = LinearLayoutManager(context!!)
+        rvProductTransactions.layoutManager = LinearLayoutManager(context!!)
     }
 
     override fun updateUi(model: ProductDetailsViewModel.UiModel) = when(model) {

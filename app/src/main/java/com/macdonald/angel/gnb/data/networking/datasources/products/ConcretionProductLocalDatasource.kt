@@ -27,7 +27,7 @@ class ConcretionProductLocalDatasource(private var db: GNBLocalDatabase) : Produ
         }
     }
 
-    override suspend fun getProductsFromLocal(): List<ProductDetailsModel> {
+    override suspend fun getProductDetailsFromLocal(): List<ProductDetailsModel> {
         val listProductDetailsModel = ArrayList<ProductDetailsModel>()
 
         db.productDAO().getProucts().forEach {
@@ -37,10 +37,10 @@ class ConcretionProductLocalDatasource(private var db: GNBLocalDatabase) : Produ
         return listProductDetailsModel
     }
 
-    override suspend fun getProductsNamesFromLocal(): List<ProductModel> {
+    override suspend fun getProductModelFromLocal(): List<ProductModel> {
         val listProductModel = ArrayList<ProductModel>()
 
-        db.productDAO().getProuctsNames().forEach {
+        db.productDAO().getProucts().forEach {
             listProductModel.add(it.toProductModel())
         }
 

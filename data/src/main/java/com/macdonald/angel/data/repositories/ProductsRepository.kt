@@ -8,11 +8,11 @@ class ProductsRepository (
     private val productsLocalDatasource: ProductsLocalDatasource
 
 ) {
-    suspend fun getProductsFromLocal(): List<ProductDetailsModel> =
-        productsLocalDatasource.getProductsFromLocal()
+    suspend fun getProductsDetailFromLocal(): List<ProductDetailsModel> =
+        productsLocalDatasource.getProductDetailsFromLocal()
 
-    suspend fun getProductsNamesFromLocal(): List<ProductModel> =
-        productsLocalDatasource.getProductsNamesFromLocal()
+    suspend fun getProductsModelFromLocal(): List<ProductModel> =
+        productsLocalDatasource.getProductModelFromLocal()
 
 
     suspend fun persistProductsIntoDatabase(products: List<ProductDetailsModel>): Boolean =

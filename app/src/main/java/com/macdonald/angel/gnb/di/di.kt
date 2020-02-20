@@ -11,6 +11,8 @@ import com.macdonald.angel.gnb.data.networking.datasources.rates.ConcretionRateL
 import com.macdonald.angel.gnb.data.networking.datasources.rates.ConcretionRatesRemoteDatasource
 import com.macdonald.angel.gnb.data.networking.datasources.transactions.ConcretionTransactionsLocalDatasource
 import com.macdonald.angel.gnb.data.networking.datasources.transactions.ConcretionTransactionsRemoteDatasource
+import com.macdonald.angel.gnb.ui.features.productDetails.ProductDetailsFragment
+import com.macdonald.angel.gnb.ui.features.productDetails.ProductDetailsViewModel
 import com.macdonald.angel.gnb.ui.features.productList.ProductListFragment
 import com.macdonald.angel.gnb.ui.features.productList.ProductListViewModel
 import com.macdonald.angel.gnb.ui.features.rateList.RateListFragment
@@ -80,6 +82,18 @@ private val scopesModule = module {
         scoped { TransactionsUseCases(get()) }
         viewModel {
             ProductListViewModel(
+                get(),
+                get(),
+                get()
+            )
+        }
+    }
+
+    scope((named<ProductDetailsFragment>())) {
+        scoped { ProductsUseCases(get()) }
+        scoped { TransactionsUseCases(get()) }
+        viewModel {
+            ProductDetailsViewModel(
                 get(),
                 get(),
                 get()
