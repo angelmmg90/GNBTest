@@ -6,6 +6,11 @@ import com.macdonald.angel.gnb.data.database.entities.ProductEntity
 @Dao
 interface ProductDAO {
 
+    @Transaction
+    suspend fun insertIncomingProducts(incomingProducts: List<ProductEntity>){
+        deleteAllProducts()
+        insertProducts(incomingProducts)
+    }
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertProduct(rate: ProductEntity)
 
@@ -20,5 +25,8 @@ interface ProductDAO {
 
     @Query("SELECT * from product_entity")
     fun getProucts(): List<ProductEntity>
+
+    @Query("DELETE FROM product_entity")
+    fun deleteAllProducts()
 
 }

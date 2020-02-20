@@ -17,7 +17,7 @@ class ConcretionProductLocalDatasource(private var db: GNBLocalDatabase) : Produ
                 productsEntityList.add(it.toProductEntity())
             }
 
-            db.productDAO().insertProducts(productsEntityList)
+            db.productDAO().insertIncomingProducts(productsEntityList)
             return true
         } catch (e: java.lang.Exception) {
             false
