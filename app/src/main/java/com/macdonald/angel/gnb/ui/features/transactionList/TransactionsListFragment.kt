@@ -82,7 +82,7 @@ class TransactionsListFragment : Fragment(),
 
                 val toast = Toasty.info(
                     context!!,
-                    "Item clicked",
+                    transactionItem.amount.toString(),
                     Toast.LENGTH_LONG,
                     true
                 )
