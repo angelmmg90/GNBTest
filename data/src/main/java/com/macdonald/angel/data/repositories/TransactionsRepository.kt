@@ -1,5 +1,6 @@
 package com.macdonald.angel.data.repositories
 
+import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.data.sources.TransactionsLocalDatasource
 import com.macdonald.angel.data.sources.TransactionsRemoteDatasource
@@ -18,5 +19,8 @@ class TransactionsRepository (
 
     suspend fun persistTransactionsIntoDatabase(transactions: List<TransactionModel>): Boolean =
         transactionsLocalDatasource.persistTransactionsIntoDatabase(transactions)
+
+    suspend fun getTransactionsByProduct(product: ProductModel): List<TransactionModel> =
+        transactionsLocalDatasource.getTransactionsByProduct(product)
 
 }

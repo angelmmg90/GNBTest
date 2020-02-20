@@ -34,5 +34,14 @@ class ConcretionProductLocalDatasource(private var db: GNBLocalDatabase) : Produ
         return listProductModel
     }
 
+    override suspend fun updateProduct(product: ProductModel): Boolean {
+        return try {
+            db.productDAO().updateProduct(product.toProductEntity())
+            return true
+        } catch (e: java.lang.Exception) {
+            false
+        }
+    }
+
 }
 

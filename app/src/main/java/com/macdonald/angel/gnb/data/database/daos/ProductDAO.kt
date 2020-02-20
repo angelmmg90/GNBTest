@@ -21,7 +21,7 @@ interface ProductDAO {
     fun deleteProduct(rate: ProductEntity)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateProduct(rate: ProductEntity)
+    fun updateProduct(product: ProductEntity)
 
     @Query("SELECT * from product_entity")
     fun getProucts(): List<ProductEntity>

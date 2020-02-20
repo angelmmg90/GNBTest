@@ -12,4 +12,9 @@ class ProductsRepository (
 
     suspend fun persistProductsIntoDatabase(products: List<ProductModel>): Boolean =
         productsLocalDatasource.persistProductsIntoDatabase(products)
+
+    suspend fun updateProduct(product: ProductModel): Boolean =
+        productsLocalDatasource.updateProduct(product)
+
+
 }

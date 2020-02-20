@@ -30,4 +30,7 @@ interface TransactionDAO {
     @Query("SELECT * from transaction_entity")
     fun getTransactions(): List<TransactionEntity>
 
+    @Query("SELECT * from transaction_entity WHERE product = :productName")
+    fun getTransactionsByProductName(productName: String): List<TransactionEntity>
+
 }

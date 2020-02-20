@@ -15,4 +15,7 @@ class ProductsUseCases(
     suspend fun persistProductsIntoDatabase(products: List<ProductModel>) : Boolean =
         productsRepository.persistProductsIntoDatabase(products)
 
+    suspend fun updateProduct(product: ProductModel) : Boolean =
+        productsRepository.updateProduct(product)
+
 }

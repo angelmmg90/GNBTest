@@ -1,5 +1,6 @@
 package com.macdonald.angel.usecases
 
+import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.data.repositories.Response
 import com.macdonald.angel.data.repositories.TransactionsRepository
@@ -16,5 +17,9 @@ class TransactionsUseCases(
 
     suspend fun persistTransactionsIntoDatabase(transactions: List<TransactionModel>) : Boolean =
         transactionsRepository.persistTransactionsIntoDatabase(transactions)
+
+    suspend fun getTransactionsByProduct(product: ProductModel) : List<TransactionModel> =
+        transactionsRepository.getTransactionsByProduct(product)
+
 
 }

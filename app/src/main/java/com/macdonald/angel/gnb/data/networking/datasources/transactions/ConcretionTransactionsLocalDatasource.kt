@@ -1,5 +1,6 @@
 package com.macdonald.angel.gnb.data.networking.datasources.transactions
 
+import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.data.sources.TransactionsLocalDatasource
 import com.macdonald.angel.gnb.data.database.GNBLocalDatabase
@@ -34,6 +35,17 @@ class ConcretionTransactionsLocalDatasource(private var db: GNBLocalDatabase) : 
 
         return transactionListModel
     }
+
+    override suspend fun getTransactionsByProduct(product: ProductModel): List<TransactionModel> {
+        val transactionListModel = ArrayList<TransactionModel>()
+
+        db.transactionDAO().getTransactionsByProductName(product.name).forEach {
+            transactionListModel.add(it.toTransactionModel())
+        }
+
+        return transactionListModel
+    }
+
 
 }
 
