@@ -22,7 +22,7 @@ interface RateDAO {
     @Delete
     fun deleteRate(rate: RateEntity)
 
-    @Query("DELETE FROM transaction_entity")
+    @Query("DELETE FROM rate_entity")
     fun deleteAllRates()
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
