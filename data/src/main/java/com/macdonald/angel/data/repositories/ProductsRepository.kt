@@ -1,5 +1,6 @@
 package com.macdonald.angel.data.repositories
 
+import com.macdonald.angel.data.model.ProductDetailsModel
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.sources.ProductsLocalDatasource
 
@@ -7,14 +8,18 @@ class ProductsRepository (
     private val productsLocalDatasource: ProductsLocalDatasource
 
 ) {
-    suspend fun getProductsFromLocal(): List<ProductModel> =
+    suspend fun getProductsFromLocal(): List<ProductDetailsModel> =
         productsLocalDatasource.getProductsFromLocal()
 
-    suspend fun persistProductsIntoDatabase(products: List<ProductModel>): Boolean =
+    suspend fun getProductsNamesFromLocal(): List<ProductModel> =
+        productsLocalDatasource.getProductsNamesFromLocal()
+
+
+    suspend fun persistProductsIntoDatabase(products: List<ProductDetailsModel>): Boolean =
         productsLocalDatasource.persistProductsIntoDatabase(products)
 
-    suspend fun updateProduct(product: ProductModel): Boolean =
-        productsLocalDatasource.updateProduct(product)
+    suspend fun updateProductDetails(productDetails: ProductDetailsModel): Boolean =
+        productsLocalDatasource.updateProductDetails(productDetails)
 
 
 }

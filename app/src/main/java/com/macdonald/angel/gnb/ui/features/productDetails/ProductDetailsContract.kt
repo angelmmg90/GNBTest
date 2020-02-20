@@ -1,6 +1,7 @@
 package com.macdonald.angel.gnb.ui.features.productDetails
 
-import com.macdonald.angel.data.model.TransactionModel
+import com.macdonald.angel.data.model.ProductModel
+import com.macdonald.angel.data.model.ProductDetailsModel
 
 interface ProductDetailsContract {
     interface View {
@@ -10,8 +11,8 @@ interface ProductDetailsContract {
     }
 
     interface ViewModel {
-        fun getTransactionsByProduct()
-        fun updateProductTransactions(transactions: List<TransactionModel>)
+        fun getTransactionsByProductName(productName: String)
+        fun updateProductDetails(productDetails: ProductDetailsModel)
     }
 
 }

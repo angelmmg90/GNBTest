@@ -26,6 +26,9 @@ interface ProductDAO {
     @Query("SELECT * from product_entity")
     fun getProucts(): List<ProductEntity>
 
+    @Query("SELECT name from product_entity")
+    fun getProuctsNames(): List<ProductEntity>
+
     @Query("DELETE FROM product_entity")
     fun deleteAllProducts()
 

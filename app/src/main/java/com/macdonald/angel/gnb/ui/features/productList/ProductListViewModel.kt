@@ -9,6 +9,7 @@ import com.macdonald.angel.data.repositories.Response
 import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 import com.macdonald.angel.gnb.common.ScopedViewModel
 import com.macdonald.angel.gnb.data.getProductsFromTransactionsList
+import com.macdonald.angel.gnb.data.toProductDetailsList
 import com.macdonald.angel.gnb.data.toTransactionModel
 import com.macdonald.angel.usecases.ProductsUseCases
 import com.macdonald.angel.usecases.TransactionsUseCases
@@ -63,7 +64,7 @@ class ProductListViewModel(
 
         getProductsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
-                productData = productUseCases.getProductsFromLocal()
+                productData = productUseCases.getProductsNamesFromLocal()
             }
             if (productData.isNullOrEmpty()) {
                 withContext(Dispatchers.Main) {
@@ -170,7 +171,7 @@ class ProductListViewModel(
         var productsInserted: Boolean
 
         insertProductsJob = CoroutineScope(Dispatchers.IO).launch {
-            productsInserted = productUseCases.persistProductsIntoDatabase(products)
+            productsInserted = productUseCases.persistProductsIntoDatabase(products.toProductDetailsList())
 
             if (productsInserted) {
 

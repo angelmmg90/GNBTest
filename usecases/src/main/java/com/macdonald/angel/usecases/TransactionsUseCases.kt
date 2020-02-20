@@ -18,8 +18,8 @@ class TransactionsUseCases(
     suspend fun persistTransactionsIntoDatabase(transactions: List<TransactionModel>) : Boolean =
         transactionsRepository.persistTransactionsIntoDatabase(transactions)
 
-    suspend fun getTransactionsByProduct(product: ProductModel) : List<TransactionModel> =
-        transactionsRepository.getTransactionsByProduct(product)
+    suspend fun getTransactionsByProduct(productName: String) : List<TransactionModel> =
+        transactionsRepository.getTransactionsByProduct(productName)
 
 
 }

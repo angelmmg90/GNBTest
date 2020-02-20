@@ -3,24 +3,22 @@ package com.macdonald.angel.gnb.ui.features.productDetails
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.macdonald.angel.data.model.ProductModel
+import com.macdonald.angel.data.model.ProductDetailsModel
 import com.macdonald.angel.data.model.TransactionModel
-import com.macdonald.angel.data.repositories.Response
-import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 import com.macdonald.angel.gnb.common.ScopedViewModel
-import com.macdonald.angel.gnb.data.getProductsFromTransactionsList
-import com.macdonald.angel.gnb.data.toTransactionModel
 import com.macdonald.angel.usecases.ProductsUseCases
 import com.macdonald.angel.usecases.TransactionsUseCases
 import kotlinx.coroutines.*
 
 class ProductDetailsViewModel(
     private val ctx: Application,
-    private val productUseCases: ProductsUseCases
+    private val productUseCases: ProductsUseCases,
+    private val transactionsUseCases: TransactionsUseCases
 ):ScopedViewModel(), ProductDetailsContract.ViewModel {
 
 
     private lateinit var getTransactionsByProductJob: Job
+    private lateinit var updateProductDetailsJob: Job
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -29,12 +27,12 @@ class ProductDetailsViewModel(
         }
 
     sealed class UiModel {
-        class ShowTransactionsByProducts(val transactions: List<TransactionModel>) : UiModel()
-        class updateProductTransactions(val transactions: List<TransactionModel>) : UiModel()
+        class ShowProductDetailsData(val productDetails: ProductDetailsModel) : UiModel()
+        class UpdateProductDetails(val productDetails: ProductDetailsModel) : UiModel()
 
-        object ErrorUpdatingProductTransactions : UiModel()
+        object NotProductTransactionsFoundLocally : UiModel()
+        object ErrorUpdatingProductDetails : UiModel()
         object ErrorGettingTransactionsByProduct : UiModel()
-        object NotTransactionByProductFound : UiModel()
     }
 
     init {
@@ -47,12 +45,59 @@ class ProductDetailsViewModel(
         }
     }
 
-    override fun getTransactionsByProduct() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getTransactionsByProductName(productName: String) {
+        lateinit var transactionsData: List<TransactionModel>
+        lateinit var productDetails: ProductDetailsModel
+
+        getTransactionsByProductJob = CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                transactionsData = transactionsUseCases.getTransactionsByProduct(productName)
+                productDetails = ProductDetailsModel(
+                    productName,
+                    transactionsData
+                )//TODO falta poner la suma total de las transacciones
+            }
+            if (transactionsData.isNullOrEmpty()) {
+                withContext(Dispatchers.Main) {
+                    _model.value =
+                        UiModel.ErrorGettingTransactionsByProduct
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    _model.value =
+                        UiModel.UpdateProductDetails(
+                            productDetails
+                        )
+                }
+            }
+        }
     }
 
-    override fun updateProductTransactions(transactions: List<TransactionModel>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun updateProductDetails(productDetails: ProductDetailsModel) {
+        var productUpdated: Boolean
+
+        updateProductDetailsJob = CoroutineScope(Dispatchers.IO).launch {
+
+            productUpdated = productUseCases.updateProductDetails(productDetails)
+
+            if (productUpdated) {
+
+                withContext(Dispatchers.Main) {
+                    if(productDetails.transactions.isNullOrEmpty()){
+                        _model.value = UiModel.NotProductTransactionsFoundLocally
+                    }else{
+                        _model.value = UiModel.ShowProductDetailsData(
+                            productDetails
+                        )
+                    }
+                }
+
+            } else {
+                withContext(Dispatchers.Main) {
+                    _model.value = UiModel.ErrorUpdatingProductDetails
+                }
+            }
+        }
     }
 
 }

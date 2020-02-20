@@ -8,11 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.macdonald.angel.gnb.R
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
  */
-class ProductDetailsFragment : Fragment() {
+class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
+
+    private val viewModel: ProductDetailsViewModel by currentScope.viewModel(this)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,5 +27,16 @@ class ProductDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_product_details, container, false)
     }
 
+    override fun initializeViews() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun updateUi(model: ProductDetailsViewModel.UiModel) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun canNotGetAnyData() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 }

@@ -1,21 +1,23 @@
 package com.macdonald.angel.usecases
 
+import com.macdonald.angel.data.model.ProductDetailsModel
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.repositories.ProductsRepository
-import com.macdonald.angel.data.repositories.Response
-import com.macdonald.angel.data.repositories.TransactionsRepository
-import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 
 class ProductsUseCases(
     private val productsRepository: ProductsRepository
 ) {
-    suspend fun getProductsFromLocal() : List<ProductModel> =
+    suspend fun getProductsFromLocal() : List<ProductDetailsModel> =
         productsRepository.getProductsFromLocal()
 
-    suspend fun persistProductsIntoDatabase(products: List<ProductModel>) : Boolean =
+    suspend fun getProductsNamesFromLocal() : List<ProductModel> =
+        productsRepository.getProductsNamesFromLocal()
+
+
+    suspend fun persistProductsIntoDatabase(products: List<ProductDetailsModel>) : Boolean =
         productsRepository.persistProductsIntoDatabase(products)
 
-    suspend fun updateProduct(product: ProductModel) : Boolean =
-        productsRepository.updateProduct(product)
+    suspend fun updateProductDetails(productDetails: ProductDetailsModel) : Boolean =
+        productsRepository.updateProductDetails(productDetails)
 
 }

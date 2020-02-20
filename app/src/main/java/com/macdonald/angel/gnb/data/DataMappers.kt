@@ -1,5 +1,6 @@
 package com.macdonald.angel.gnb.data
 
+import com.macdonald.angel.data.model.ProductDetailsModel
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.model.RateModel
 import com.macdonald.angel.data.model.TransactionModel
@@ -51,7 +52,8 @@ fun RateModel.toRateEntity(): RateEntity =
         rate = rate
     )
 
-fun ProductModel.toProductEntity(): ProductEntity {
+
+fun ProductDetailsModel.toProductEntity(): ProductEntity {
     val transactionListEntity = ArrayList<TransactionEntity>()
     transactions?.forEach { transactionListEntity.add(it.toTransactionEntity()) }
     return ProductEntity(
@@ -61,15 +63,53 @@ fun ProductModel.toProductEntity(): ProductEntity {
     )
 }
 
-fun ProductEntity.toProductModel(): ProductModel {
+fun List<ProductModel>.toProductDetailsList(): List<ProductDetailsModel> {
+    val productDetailsList = ArrayList<ProductDetailsModel>()
+
+    this.forEach {
+        productDetailsList.add(it.toProductDetails())
+    }
+
+    return productDetailsList
+}
+
+fun List<ProductDetailsModel>.toProductModelList(): List<ProductModel> {
+    val productModelList = ArrayList<ProductModel>()
+
+    this.forEach {
+        productModelList.add(it.toProductModel())
+    }
+
+    return productModelList
+}
+
+
+fun ProductModel.toProductDetails(): ProductDetailsModel =
+    ProductDetailsModel(
+        name
+    )
+
+fun ProductDetailsModel.toProductModel(): ProductModel =
+    ProductModel(
+        name
+    )
+
+
+fun ProductEntity.toProductDetailsModel(): ProductDetailsModel {
     val transactionListModel = ArrayList<TransactionModel>()
     transactions?.forEach { transactionListModel.add(it.toTransactionModel()) }
-    return ProductModel(
+    return ProductDetailsModel(
         name = name,
         transactions = transactionListModel,
         totalSum = totalSum
     )
 }
+
+fun ProductEntity.toProductModel(): ProductModel =
+    ProductModel(
+        name = name
+    )
+
 
 fun ArrayList<ProductModel>.getProductsFromTransactionsList(transactionList: ArrayList<TransactionModel>):
         ArrayList<ProductModel> {

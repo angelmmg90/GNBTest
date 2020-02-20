@@ -20,7 +20,7 @@ class TransactionsRepository (
     suspend fun persistTransactionsIntoDatabase(transactions: List<TransactionModel>): Boolean =
         transactionsLocalDatasource.persistTransactionsIntoDatabase(transactions)
 
-    suspend fun getTransactionsByProduct(product: ProductModel): List<TransactionModel> =
-        transactionsLocalDatasource.getTransactionsByProduct(product)
+    suspend fun getTransactionsByProduct(productName: String): List<TransactionModel> =
+        transactionsLocalDatasource.getTransactionsByProduct(productName)
 
 }
