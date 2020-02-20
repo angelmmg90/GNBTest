@@ -45,7 +45,7 @@ class ProductDetailsViewModel(
         }
     }
 
-    override fun getTransactionsByProductName(productName: String) {
+    override fun getProductDetailsData(productName: String) {
         lateinit var transactionsData: List<TransactionModel>
         lateinit var productDetails: ProductDetailsModel
 
@@ -73,7 +73,7 @@ class ProductDetailsViewModel(
         }
     }
 
-    override fun updateProductDetails(productDetails: ProductDetailsModel) {
+    override fun updateProductDetailsData(productDetails: ProductDetailsModel) {
         var productUpdated: Boolean
 
         updateProductDetailsJob = CoroutineScope(Dispatchers.IO).launch {

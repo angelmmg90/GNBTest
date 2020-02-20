@@ -19,6 +19,14 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
 
+        <action
+            android:id="@+id/go_product_detail_action"
+            app:destination="@id/productDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
     <fragment
         android:id="@+id/rateListFragment"
@@ -29,5 +37,26 @@
         android:id="@+id/productListFragment"
         android:name="com.macdonald.angel.gnb.ui.features.productList.ProductListFragment"
         android:label="@string/product_list_fragment_name"
-        tools:layout="@layout/fragment_product_list" />
+        tools:layout="@layout/fragment_product_list">
+
+        <action
+            android:id="@+id/go_product_detail_action"
+            app:destination="@id/productDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.macdonald.angel.gnb.ui.features.productDetails.ProductDetailsFragment"
+        android:label="@string/product_details_fragment_name"
+        tools:layout="@layout/fragment_product_details" >
+
+        <argument
+            android:name="productName"
+            app:argType="string"/>
+
+    </fragment>
 </navigation>

@@ -9,4 +9,6 @@
     <string name="transaction_list_fragment_name">Transaction List</string>
     <string name="rate_list_fragment_name">Rate List</string>
     <string name="product_list_fragment_name">Product List</string>
+    <string name="product_details_fragment_name">Product Details</string>
+
 </resources>

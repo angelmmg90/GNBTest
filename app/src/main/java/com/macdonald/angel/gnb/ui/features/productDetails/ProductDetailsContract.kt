@@ -11,8 +11,8 @@ interface ProductDetailsContract {
     }
 
     interface ViewModel {
-        fun getTransactionsByProductName(productName: String)
-        fun updateProductDetails(productDetails: ProductDetailsModel)
+        fun getProductDetailsData(productName: String)
+        fun updateProductDetailsData(productDetails: ProductDetailsModel)
     }
 
 }

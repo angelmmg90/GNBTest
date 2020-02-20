@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.gnb.R
@@ -58,13 +59,10 @@ class ProductListFragment : Fragment(), ProductListContract.View {
                 listProducts
             ) { productItem: ProductModel, _: View ->
 
-                val toast = Toasty.info(
-                    context!!,
-                    "Item clicked",
-                    Toast.LENGTH_LONG,
-                    true
-                )
-                toast.show()
+                val productDetailScreen =
+                    ProductListFragmentDirections.goProductDetailAction(productItem.name)
+                findNavController().navigate(productDetailScreen)
+
             }
             rvProducts.adapter = adapter
         }
