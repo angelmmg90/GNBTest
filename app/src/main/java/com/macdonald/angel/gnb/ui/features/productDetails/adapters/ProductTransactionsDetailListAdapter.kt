@@ -48,9 +48,7 @@ class ProductTransactionsDetailListAdapter(
             itemView.tvAmountDetail.text = transactionItem.amount.round()
             itemView.tvCurrencyDetail.text = transactionItem.currency
             itemView.tvAmountChosenCurrencyDetail.text =
-                transactionItem.conversionToChosenCurrency.toString()
-
-            //TODO habrá que cambiarlo cuando se aplique la función de seleccionar la moneda de cambio que queramos
+                transactionItem.conversionToChosenCurrency.round()
             itemView.tvChosenCurrencyDetail.text = CurrencyType.EUR.currency
             itemView.setOnClickListener {
                 clickListener(transactionItem, view)

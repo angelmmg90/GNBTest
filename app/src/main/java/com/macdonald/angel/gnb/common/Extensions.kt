@@ -29,7 +29,7 @@ fun Fragment.messageToShow(messageToShow: String, isError: Boolean){
 }
 
 fun Double.round(): String {
-    val df = DecimalFormat("#,###.00")
+    val df = DecimalFormat("#,##0.00")
     df.roundingMode = RoundingMode.HALF_EVEN
     return df.format(this)
 }
