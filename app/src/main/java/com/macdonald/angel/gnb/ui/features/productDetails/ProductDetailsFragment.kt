@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.CurrencyType
 import com.macdonald.angel.data.model.TransactionDetailsModel
 import com.macdonald.angel.gnb.R
-import com.macdonald.angel.gnb.common.RecyclerCustomScroll
-import com.macdonald.angel.gnb.common.messageToShow
-import com.macdonald.angel.gnb.common.round
+import com.macdonald.angel.gnb.common.*
 import com.macdonald.angel.gnb.ui.features.productDetails.adapters.ProductTransactionsDetailListAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -50,8 +49,8 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
         if (isArguments) {
             var args: ProductDetailsFragmentArgs =
                 ProductDetailsFragmentArgs.fromBundle(arguments!!)
+            this.requireActivity().progressBar.visible()
             initializeViews()
-
             viewModel.getProductDetailsData(args.productName)
         } else {
             messageToShow(getString(R.string.not_get_products_details), true)
@@ -93,6 +92,7 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
                 )
             }
             rvProductTransactions.adapter = adapter
+            this.requireActivity().progressBar.hide()
         }
         is ProductDetailsViewModel.UiModel.UpdateProductDetails -> {
             tvTotalSum.text = model.productDetails.totalSum.round()
@@ -101,15 +101,19 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
         }
         ProductDetailsViewModel.UiModel.NotProductTransactionsFoundLocally -> {
             messageToShow(getString(R.string.not_found_product_transactions_details), false)
+            this.requireActivity().progressBar.hide()
         }
         ProductDetailsViewModel.UiModel.ErrorUpdatingProductDetails -> {
             messageToShow(getString(R.string.not_get_products_details), true)
+            this.requireActivity().progressBar.hide()
         }
         ProductDetailsViewModel.UiModel.ErrorGettingTransactionsByProduct -> {
             messageToShow(getString(R.string.not_get_products_details), true)
+            this.requireActivity().progressBar.hide()
         }
         ProductDetailsViewModel.UiModel.NotRateDataFoundLocally -> {
             messageToShow(getString(R.string.not_rate_data_found), true)
+            this.requireActivity().progressBar.hide()
         }
     }
 }

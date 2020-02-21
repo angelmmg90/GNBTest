@@ -9,8 +9,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.hide
 import com.macdonald.angel.gnb.common.messageToShow
+import com.macdonald.angel.gnb.common.visible
 import com.macdonald.angel.gnb.ui.features.transactionList.adapters.TransactionsListAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_transactions_list.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,6 +45,7 @@ class TransactionsListFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        this.requireActivity().progressBar.visible()
         initializeViews()
         viewModel.getAllTransactionsFromLocal()
     }
@@ -83,18 +87,22 @@ class TransactionsListFragment : Fragment(),
                 )
             }
             rvTransactions.adapter = adapter
+            this.requireActivity().progressBar.hide()
         }
         TransactionsListViewModel.UiModel.ErrorGettingTrasactions -> {
             messageToShow(getString(R.string.not_get_transactions), true)
+            this.requireActivity().progressBar.hide()
         }
         TransactionsListViewModel.UiModel.NetWorkError -> {
             messageToShow(getString(R.string.network_error), true)
+            this.requireActivity().progressBar.hide()
         }
         TransactionsListViewModel.UiModel.NotTransactionDataFoundLocally -> {
             viewModel.getAllTransactionsFromRemote()
         }
         TransactionsListViewModel.UiModel.ErrorGettingsTransactions -> {
             messageToShow(getString(R.string.not_get_transactions), true)
+            this.requireActivity().progressBar.hide()
         }
     }
 }

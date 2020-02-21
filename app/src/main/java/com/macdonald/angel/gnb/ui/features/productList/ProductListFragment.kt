@@ -11,8 +11,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.hide
 import com.macdonald.angel.gnb.common.messageToShow
+import com.macdonald.angel.gnb.common.visible
 import com.macdonald.angel.gnb.ui.features.productList.adapters.ProductListAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,6 +44,7 @@ class ProductListFragment : Fragment(), ProductListContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        this.requireActivity().progressBar.visible()
         initializeViews()
         viewModel.loadData()
     }
@@ -63,6 +67,7 @@ class ProductListFragment : Fragment(), ProductListContract.View {
 
             }
             rvProducts.adapter = adapter
+            this.requireActivity().progressBar.hide()
         }
         is ProductListViewModel.UiModel.InsertProducts -> {
             viewModel.insertAllProducts(model.productList)
@@ -72,18 +77,22 @@ class ProductListFragment : Fragment(), ProductListContract.View {
         }
         ProductListViewModel.UiModel.NetWorkError -> {
             messageToShow(getString(R.string.network_error), true)
+            this.requireActivity().progressBar.hide()
         }
         ProductListViewModel.UiModel.ErrorInsertingProducts -> {
             messageToShow(getString(R.string.not_get_products), true)
+            this.requireActivity().progressBar.hide()
         }
         ProductListViewModel.UiModel.ErrorGettingTransactions -> {
             messageToShow(getString(R.string.not_get_products), false)
+            this.requireActivity().progressBar.hide()
         }
         ProductListViewModel.UiModel.ErrorGettingLocalTransactions -> {
             viewModel.getProductsFromRemoteTransactions()
         }
         ProductListViewModel.UiModel.ErrorGettingRates -> {
             messageToShow(getString(R.string.not_rates_downloaded), false)
+            this.requireActivity().progressBar.hide()
         }
     }
 

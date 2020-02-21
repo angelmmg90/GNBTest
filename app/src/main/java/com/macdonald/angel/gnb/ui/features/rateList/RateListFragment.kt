@@ -10,8 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.RateModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.hide
 import com.macdonald.angel.gnb.common.messageToShow
+import com.macdonald.angel.gnb.common.visible
 import com.macdonald.angel.gnb.ui.features.rateList.adapters.RatesListAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_rate_list.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,6 +43,7 @@ class RateListFragment : Fragment(), RateListContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        this.requireActivity().progressBar.visible()
         initializeViews()
         viewModel.getAllRatesFromLocal()
     }
@@ -63,12 +67,15 @@ class RateListFragment : Fragment(), RateListContract.View {
                 )
             }
             rvRates.adapter = adapter
+            this.requireActivity().progressBar.hide()
         }
         RateListViewModel.UiModel.ErrorGettingRates -> {
             messageToShow(getString(R.string.not_get_rates), true)
+            this.requireActivity().progressBar.hide()
         }
         RateListViewModel.UiModel.NetWorkError -> {
             messageToShow(getString(R.string.network_error), true)
+            this.requireActivity().progressBar.hide()
         }
         RateListViewModel.UiModel.NotRateDataFoundLocally -> {
             viewModel.getAllRatesFromRemote()
