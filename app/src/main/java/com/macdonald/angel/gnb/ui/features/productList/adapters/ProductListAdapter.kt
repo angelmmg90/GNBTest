@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.ui.features.productDetails.adapters.ProductTransactionsDetailListAdapter
 import kotlinx.android.synthetic.main.item_product.view.*
 
 class ProductListAdapter(

@@ -6,22 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.CurrencyType
-import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.model.TransactionDetailsModel
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.gnb.R
 import com.macdonald.angel.gnb.common.messageToShow
 import com.macdonald.angel.gnb.data.toTransactionModelList
-import com.macdonald.angel.gnb.ui.features.productList.adapters.ProductListAdapter
+import com.macdonald.angel.gnb.ui.features.productDetails.adapters.ProductTransactionsDetailListAdapter
 import com.macdonald.angel.gnb.ui.features.transactionList.adapters.TransactionsListAdapter
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_product_details.*
-import kotlinx.android.synthetic.main.fragment_product_list.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,7 +27,7 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
 
     private val viewModel: ProductDetailsViewModel by currentScope.viewModel(this)
 
-    private lateinit var adapter: TransactionsListAdapter
+    private lateinit var adapter: ProductTransactionsDetailListAdapter
     private lateinit var transactionList: ArrayList<TransactionDetailsModel>
 
     override fun onCreateView(
@@ -68,11 +63,14 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
     override fun updateUi(model: ProductDetailsViewModel.UiModel) = when(model) {
         is ProductDetailsViewModel.UiModel.ShowProductDetailsData -> {
             transactionList = model.productDetails.transactions as ArrayList<TransactionDetailsModel>
-            adapter = TransactionsListAdapter(
+            adapter = ProductTransactionsDetailListAdapter(
                 context!!,
-                transactionList.toTransactionModelList() //TODO change this later
-            ) { transactionItem: TransactionModel, _: View ->
-                messageToShow(transactionItem.amount.toString(), false)
+                transactionList
+            ) { transactionItem: TransactionDetailsModel, _: View ->
+                messageToShow(transactionItem.conversionToChosenCurrency.toString() + " " +
+                        CurrencyType.EUR.currency
+                    , false
+                )
             }
             rvProductTransactions.adapter = adapter
         }

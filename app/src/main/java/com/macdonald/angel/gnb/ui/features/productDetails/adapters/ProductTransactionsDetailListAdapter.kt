@@ -1,0 +1,59 @@
+package com.macdonald.angel.gnb.ui.features.productDetails.adapters
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.macdonald.angel.data.model.CurrencyType
+import com.macdonald.angel.data.model.ProductModel
+import com.macdonald.angel.data.model.TransactionDetailsModel
+import com.macdonald.angel.gnb.R
+import kotlinx.android.synthetic.main.item_product.view.*
+import kotlinx.android.synthetic.main.item_transaction_detail.view.*
+
+class ProductTransactionsDetailListAdapter(
+    val context: Context,
+    private val listTransaction: List<TransactionDetailsModel>,
+    private val clickListener: (TransactionDetailsModel, View) -> Unit
+    ) : RecyclerView.Adapter<ProductTransactionsDetailListAdapter.ProductTransactionsDetailItemViewHolder>() {
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ProductTransactionsDetailItemViewHolder {
+        val inflatedView =
+            LayoutInflater.from(context).inflate(R.layout.item_transaction_detail, parent, false)
+
+        return ProductTransactionsDetailItemViewHolder(
+            inflatedView
+        )
+    }
+
+    override fun getItemCount(): Int = listTransaction.size
+
+    override fun onBindViewHolder(holder: ProductTransactionsDetailItemViewHolder, position: Int) {
+        holder.bindProductItem(listTransaction[position], clickListener)
+    }
+
+    //VIEW HOLDER
+    class ProductTransactionsDetailItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var view: View = itemView
+
+        fun bindProductItem(
+           transactionItem: TransactionDetailsModel,
+            clickListener: (TransactionDetailsModel, View) -> Unit
+        ) {
+            itemView.tvProductNameDetail.text = transactionItem.product
+            itemView.tvAmountDetail.text = transactionItem.amount.toString()
+            itemView.tvCurrencyDetail.text = transactionItem.currency
+            itemView.tvAmountChosenCurrencyDetail.text = transactionItem.conversionToChosenCurrency.toString()
+
+            //TODO habrá que cambiarlo cuando se aplique la función de seleccionar la moneda de cambio que queramos
+            itemView.tvChosenCurrencyDetail.text = CurrencyType.EUR.currency
+            itemView.setOnClickListener {
+                clickListener(transactionItem, view)
+            }
+        }
+    }
+}

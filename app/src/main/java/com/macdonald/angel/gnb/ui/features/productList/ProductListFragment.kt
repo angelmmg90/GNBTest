@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -13,8 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.gnb.R
 import com.macdonald.angel.gnb.common.messageToShow
+import com.macdonald.angel.gnb.ui.features.productDetails.adapters.ProductTransactionsDetailListAdapter
 import com.macdonald.angel.gnb.ui.features.productList.adapters.ProductListAdapter
-import es.dmoral.toasty.Toasty
+import com.macdonald.angel.gnb.ui.features.transactionList.adapters.TransactionsListAdapter
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
