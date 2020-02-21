@@ -1,9 +1,6 @@
 package com.macdonald.angel.gnb.data
 
-import com.macdonald.angel.data.model.ProductDetailsModel
-import com.macdonald.angel.data.model.ProductModel
-import com.macdonald.angel.data.model.RateModel
-import com.macdonald.angel.data.model.TransactionModel
+import com.macdonald.angel.data.model.*
 import com.macdonald.angel.domain.ratesUseCase.RateDomain
 import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 import com.macdonald.angel.gnb.data.database.entities.ProductEntity
@@ -24,12 +21,62 @@ fun TransactionModel.toTransactionEntity(): TransactionEntity =
         currency = currency
     )
 
+fun TransactionDetailsModel.toTransactionEntity(): TransactionEntity =
+    TransactionEntity(
+        product = product,
+        amount = amount,
+        currency = currency,
+        conversionToChosenCurrency = conversionToChosenCurrency
+    )
+
 fun TransactionEntity.toTransactionModel(): TransactionModel =
     TransactionModel(
         product = product,
         amount = amount,
         currency = currency
     )
+
+fun TransactionEntity.toTransactionDetailModel(): TransactionDetailsModel =
+    TransactionDetailsModel(
+        product = product,
+        amount = amount,
+        currency = currency,
+        conversionToChosenCurrency = conversionToChosenCurrency
+    )
+
+fun TransactionModel.toTransactionDetailModel(): TransactionDetailsModel =
+    TransactionDetailsModel(
+        product = product,
+        amount = amount,
+        currency = currency
+    )
+
+fun TransactionDetailsModel.toTransactionModel(): TransactionModel =
+    TransactionModel(
+        product = product,
+        amount = amount,
+        currency = currency
+    )
+
+fun List<TransactionModel>.toTransactionDetailsModelList(): List<TransactionDetailsModel> {
+    val transactionDetailsList = ArrayList<TransactionDetailsModel>()
+
+    this.forEach {
+        transactionDetailsList.add(it.toTransactionDetailModel())
+    }
+
+    return transactionDetailsList
+}
+
+fun List<TransactionDetailsModel>.toTransactionModelList(): List<TransactionModel> {
+    val transactionModelList = ArrayList<TransactionModel>()
+
+    this.forEach {
+        transactionModelList.add(it.toTransactionModel())
+    }
+
+    return transactionModelList
+}
 
 fun RateDomain.toRateModel(): RateModel =
     RateModel(
@@ -96,12 +143,12 @@ fun ProductDetailsModel.toProductModel(): ProductModel =
 
 
 fun ProductEntity.toProductDetailsModel(): ProductDetailsModel {
-    val transactionListModel = ArrayList<TransactionModel>()
-    transactions?.forEach { transactionListModel.add(it.toTransactionModel()) }
+    val transactionDetailsListModel = ArrayList<TransactionDetailsModel>()
+    transactions?.forEach { transactionDetailsListModel.add(it.toTransactionDetailModel()) }
     return ProductDetailsModel(
         name = name,
-        transactions = transactionListModel,
-        totalSum = totalSum!!
+        transactions = transactionDetailsListModel,
+        totalSum = totalSum
     )
 }
 

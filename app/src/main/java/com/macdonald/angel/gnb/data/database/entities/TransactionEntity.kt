@@ -11,5 +11,6 @@ data class TransactionEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "transaction_id") val id: Int = 0,
     val product : String = "",
     val amount : Double,
-    val currency : String = ""
+    val currency : String = "",
+    val conversionToChosenCurrency: Double = 0.0
 )

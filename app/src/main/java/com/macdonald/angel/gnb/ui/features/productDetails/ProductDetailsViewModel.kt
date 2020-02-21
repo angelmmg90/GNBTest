@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.macdonald.angel.data.model.ProductDetailsModel
+import com.macdonald.angel.data.model.TransactionDetailsModel
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.gnb.common.ScopedViewModel
+import com.macdonald.angel.gnb.data.toTransactionDetailsModelList
 import com.macdonald.angel.usecases.ProductsUseCases
 import com.macdonald.angel.usecases.TransactionsUseCases
 import kotlinx.coroutines.*
@@ -48,13 +50,18 @@ class ProductDetailsViewModel(
     override fun getProductDetailsData(productName: String) {
         lateinit var transactionsData: List<TransactionModel>
         lateinit var productDetails: ProductDetailsModel
+        lateinit var transactionDetailList: List<TransactionDetailsModel>
 
         getTransactionsByProductJob = CoroutineScope(Dispatchers.IO).launch {
+
+            //TODO meter la lógica de conversión de monedas
             withContext(Dispatchers.IO) {
                 transactionsData = transactionsUseCases.getTransactionsByProduct(productName)
+                transactionDetailList = transactionsData.toTransactionDetailsModelList()
+
                 productDetails = ProductDetailsModel(
                     productName,
-                    transactionsData
+                    transactionsData.toTransactionDetailsModelList()
                 )//TODO falta poner la suma total de las transacciones
             }
             if (transactionsData.isNullOrEmpty()) {
@@ -98,6 +105,10 @@ class ProductDetailsViewModel(
                 }
             }
         }
+    }
+
+    private fun getEURAmount(){
+
     }
 
 }

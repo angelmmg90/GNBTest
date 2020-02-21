@@ -11,5 +11,5 @@ data class ProductEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "product_id") val id: Int = 0,
     val name : String = "",
     val transactions : List<TransactionEntity>? = emptyList(),
-    val totalSum : Double? = 0.0
+    val totalSum : Double = 0.0
 )
