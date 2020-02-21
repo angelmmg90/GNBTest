@@ -11,5 +11,6 @@ data class RateEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "rate_id") val id: Int = 0,
     val from : String = "",
     val to : String = "",
-    val rate : Double
+    val rate : Double,
+    val rateChosenCurrency : Double
 )

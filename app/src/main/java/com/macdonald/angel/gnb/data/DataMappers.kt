@@ -80,23 +80,33 @@ fun List<TransactionDetailsModel>.toTransactionModelList(): List<TransactionMode
 
 fun RateDomain.toRateModel(): RateModel =
     RateModel(
-        from,
-        to,
-        rate
+        from = from,
+        to = to,
+        rate = rate
+    )
+
+fun RateDomain.toRateModel(rateChosenCurrency: Double): RateModel =
+    RateModel(
+        from = from,
+        to = to,
+        rate = rate,
+        rateChosenCurrency = rateChosenCurrency
     )
 
 fun RateEntity.toRateModel(): RateModel =
     RateModel(
         from,
         to,
-        rate
+        rate,
+        rateChosenCurrency
     )
 
 fun RateModel.toRateEntity(): RateEntity =
     RateEntity(
         from = from,
         to = to,
-        rate = rate
+        rate = rate,
+        rateChosenCurrency = rateChosenCurrency
     )
 
 

@@ -43,7 +43,7 @@ class RatesListAdapter(
         ) {
             itemView.tvFrom.text = rateItem.from
             itemView.tvTo.text = rateItem.to
-            itemView.tvRate.text = rateItem.rate.toString()
+            itemView.tvRate.text = rateItem.rateChosenCurrency.toString()
             itemView.setOnClickListener {
                 clickListener(rateItem, view)
             }

@@ -43,13 +43,13 @@ class RateListViewModel(
     }
 
     override fun getAllRatesFromLocal() {
-        lateinit var ratesData: List<RateModel>
+        lateinit var rateList: List<RateModel>
 
         getRatesJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
-                ratesData = ratesUserCase.getRatesFromLocal()
+                rateList = ratesUserCase.getRatesFromLocal()
             }
-            if (ratesData.isNullOrEmpty()) {
+            if (rateList.isNullOrEmpty()) {
                 withContext(Dispatchers.Main) {
                     _model.value =
                         UiModel.NotRateDataFoundLocally
@@ -58,7 +58,7 @@ class RateListViewModel(
                 withContext(Dispatchers.Main) {
                     _model.value =
                         UiModel.ShowRates(
-                            ratesData
+                            rateList
                         )
                 }
             }
@@ -96,13 +96,10 @@ class RateListViewModel(
                 }
 
                 is Response.Success -> {
-                    var ratesListModel = ArrayList<RateModel>()
+                    var ratesListModel: List<RateModel>
                     var rawListRates = (response as Response.Success<Array<RateDomain>>).data
 
-                    rawListRates.forEach {
-                        ratesListModel.add(it.toRateModel())
-                    }
-
+                    ratesListModel = RatesController.getCustomRates(rawListRates.toList())
                     ratesUserCase.persistRatesIntoDatabase(ratesListModel)
 
                     withContext(Dispatchers.Main) {
