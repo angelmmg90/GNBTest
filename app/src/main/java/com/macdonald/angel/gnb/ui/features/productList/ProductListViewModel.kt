@@ -96,7 +96,7 @@ class ProductListViewModel(
 
     override fun getProductsFromLocalTransactions() {
         lateinit var transactionsData: List<TransactionModel>
-        var productList: ArrayList<ProductModel> = ArrayList()
+        val productList: ArrayList<ProductModel> = ArrayList()
 
         getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
@@ -109,7 +109,7 @@ class ProductListViewModel(
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    var productsFromTransactionList =
+                    val productsFromTransactionList =
                         productList.getProductsFromTransactionsList(ArrayList(transactionsData))
 
                     _model.value =
@@ -124,7 +124,7 @@ class ProductListViewModel(
 
     override fun getProductsFromRemoteTransactions() {
         lateinit var response: Response<Array<TransactionDomain>>
-        var productList: ArrayList<ProductModel> = ArrayList()
+        val productList: ArrayList<ProductModel> = ArrayList()
 
         getTransactionsJob = CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
@@ -146,8 +146,8 @@ class ProductListViewModel(
                 }
 
                 is Response.Success -> {
-                    var transactionsListModel = ArrayList<TransactionModel>()
-                    var rawListTransactions =
+                    val transactionsListModel = ArrayList<TransactionModel>()
+                    val rawListTransactions =
                         (response as Response.Success<Array<TransactionDomain>>).data
 
                     rawListTransactions.forEach {
@@ -157,7 +157,7 @@ class ProductListViewModel(
                     transactionsUseCases.persistTransactionsIntoDatabase(transactionsListModel)
 
                     withContext(Dispatchers.Main) {
-                        var productsFromTransactionList =
+                        val productsFromTransactionList =
                             productList.getProductsFromTransactionsList(transactionsListModel)
 
                         _model.value =
@@ -227,8 +227,8 @@ class ProductListViewModel(
                 }
 
                 is Response.Success -> {
-                    var ratesListModel: List<RateModel>
-                    var rawListRates = (response as Response.Success<Array<RateDomain>>).data
+                    val ratesListModel: List<RateModel>
+                    val rawListRates = (response as Response.Success<Array<RateDomain>>).data
 
                     ratesListModel = RatesController.getCustomRates(rawListRates.toList())
                     ratesUseCases.persistRatesIntoDatabase(ratesListModel)

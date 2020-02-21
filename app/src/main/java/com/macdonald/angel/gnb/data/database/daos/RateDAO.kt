@@ -2,7 +2,6 @@ package com.macdonald.angel.gnb.data.database.daos
 
 import androidx.room.*
 import com.macdonald.angel.gnb.data.database.entities.RateEntity
-import com.macdonald.angel.gnb.data.database.entities.TransactionEntity
 
 @Dao
 interface RateDAO {

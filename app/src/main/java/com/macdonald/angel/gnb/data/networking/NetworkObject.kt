@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkObject {
-    const val BASE_URL =  BuildConfig.BASEURL
+    private const val BASE_URL =  BuildConfig.BASEURL
 
     val service: ApiServices = Retrofit.Builder()
         .baseUrl(BASE_URL)

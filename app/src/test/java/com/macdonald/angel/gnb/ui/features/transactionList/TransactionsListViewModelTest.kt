@@ -12,7 +12,6 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
@@ -72,7 +71,7 @@ class TransactionsListViewModelTest {
             ).onChanged((vm.model.value as
                     TransactionsListViewModel.UiModel.ShowTransactions))
 
-            var currentStatus =
+            val currentStatus =
                 (vm.model.value as TransactionsListViewModel.UiModel.ShowTransactions).transactionList
             assertEquals(currentStatus[0].product, listTransactions[0].product)
         }

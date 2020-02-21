@@ -5,13 +5,12 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import es.dmoral.toasty.Toasty
-import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
 
 fun Fragment.messageToShow(messageToShow: String, isError: Boolean){
-    var toast = if(isError){
+    val toast = if(isError){
         Toasty.error(
             context!!,
             messageToShow,

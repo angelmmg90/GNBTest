@@ -86,8 +86,8 @@ class RateListViewModel(
                 }
 
                 is Response.Success -> {
-                    var ratesListModel: List<RateModel>
-                    var rawListRates = (response as Response.Success<Array<RateDomain>>).data
+                    val ratesListModel: List<RateModel>
+                    val rawListRates = (response as Response.Success<Array<RateDomain>>).data
 
                     ratesListModel = RatesController.getCustomRates(rawListRates.toList())
                     ratesUserCase.persistRatesIntoDatabase(ratesListModel)

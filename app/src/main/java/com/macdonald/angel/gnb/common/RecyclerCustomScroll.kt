@@ -7,7 +7,7 @@ abstract class RecyclerCustomScroll: RecyclerView.OnScrollListener() {
     private val HIDE_THRESHOLD = 100f
     private val SHOW_THRESHOLD = 50f
 
-    var scrollDist = 0
+    private var scrollDist = 0
     private var isVisible = true
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

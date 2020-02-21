@@ -9,7 +9,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import retrofit2.HttpException
 import kotlin.coroutines.resume
 
 class ConcretionRatesRemoteDatasource(val context: Context): RatesRemoteDatasource {

@@ -1,6 +1,5 @@
 package com.macdonald.angel.data.repositories
 
-import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.data.sources.TransactionsLocalDatasource
 import com.macdonald.angel.data.sources.TransactionsRemoteDatasource

@@ -71,7 +71,7 @@ class RateListViewModelTest {
             ).onChanged((vm.model.value as
                     RateListViewModel.UiModel.ShowRates))
 
-            var currentStatus =
+            val currentStatus =
                 (vm.model.value as RateListViewModel.UiModel.ShowRates).rateList
             assertEquals(currentStatus[0].rate, rateList[0].rate)
         }

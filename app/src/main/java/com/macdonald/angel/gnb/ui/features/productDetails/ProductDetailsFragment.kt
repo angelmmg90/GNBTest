@@ -45,9 +45,9 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var isArguments = arguments != null
+        val isArguments = arguments != null
         if (isArguments) {
-            var args: ProductDetailsFragmentArgs =
+            val args: ProductDetailsFragmentArgs =
                 ProductDetailsFragmentArgs.fromBundle(arguments!!)
             this.requireActivity().progressBar.visible()
             initializeViews()

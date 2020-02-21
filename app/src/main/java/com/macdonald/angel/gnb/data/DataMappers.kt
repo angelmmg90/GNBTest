@@ -66,16 +66,6 @@ fun TransactionDetailsModel.toTransactionModel(): TransactionModel =
         currency = currency
     )
 
-fun List<TransactionModel>.toTransactionDetailsModelList(): List<TransactionDetailsModel> {
-    val transactionDetailsList = ArrayList<TransactionDetailsModel>()
-
-    this.forEach {
-        transactionDetailsList.add(it.toTransactionDetailModel())
-    }
-
-    return transactionDetailsList
-}
-
 fun List<TransactionModel>.toTransactionDetailsModelList(rateChosenCurrency: Double): List<TransactionDetailsModel> {
     val transactionDetailsList = ArrayList<TransactionDetailsModel>()
 
@@ -85,23 +75,6 @@ fun List<TransactionModel>.toTransactionDetailsModelList(rateChosenCurrency: Dou
 
     return transactionDetailsList
 }
-
-fun List<TransactionDetailsModel>.toTransactionModelList(): List<TransactionModel> {
-    val transactionModelList = ArrayList<TransactionModel>()
-
-    this.forEach {
-        transactionModelList.add(it.toTransactionModel())
-    }
-
-    return transactionModelList
-}
-
-fun RateDomain.toRateModel(): RateModel =
-    RateModel(
-        from = from,
-        to = to,
-        rate = rate
-    )
 
 fun RateDomain.toRateModel(rateChosenCurrency: Double): RateModel =
     RateModel(
@@ -148,17 +121,6 @@ fun List<ProductModel>.toProductDetailsList(): List<ProductDetailsModel> {
     return productDetailsList
 }
 
-fun List<ProductDetailsModel>.toProductModelList(): List<ProductModel> {
-    val productModelList = ArrayList<ProductModel>()
-
-    this.forEach {
-        productModelList.add(it.toProductModel())
-    }
-
-    return productModelList
-}
-
-
 fun ProductModel.toProductDetails(): ProductDetailsModel =
     ProductDetailsModel(
         name
@@ -200,7 +162,7 @@ fun ArrayList<ProductModel>.getProductsFromTransactionsList(transactionList: Arr
                 newProduct = ProductModel(
                     name = transaction.product
                 )
-                var productNotAdded = !this.contains(newProduct)
+                val productNotAdded = !this.contains(newProduct)
                 if(productNotAdded){
                     this.add(newProduct)
                 }

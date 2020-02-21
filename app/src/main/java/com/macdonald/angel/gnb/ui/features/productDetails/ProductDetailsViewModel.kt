@@ -76,7 +76,7 @@ class ProductDetailsViewModel(
                             UiModel.NotRateDataFoundLocally
                     }
                 } else {
-                    var rateChosenCurrency =
+                    val rateChosenCurrency =
                         RatesController.getChosenCurrencyRate(rateList, chosenCurrency)
                     transactionsData = transactionsUseCases.getTransactionsByProduct(productName)
                     transactionDetailList =

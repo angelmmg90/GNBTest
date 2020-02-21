@@ -89,8 +89,8 @@ class TransactionsListViewModel(
                 }
 
                 is Response.Success -> {
-                    var transactionsListModel = ArrayList<TransactionModel>()
-                    var rawListTransactions =
+                    val transactionsListModel = ArrayList<TransactionModel>()
+                    val rawListTransactions =
                         (response as Response.Success<Array<TransactionDomain>>).data
 
                     rawListTransactions.forEach {

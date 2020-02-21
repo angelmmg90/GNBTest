@@ -14,24 +14,24 @@ class RatesController {
         private const val DEFAULT_RATE: Double = 1.0
 
         fun getCustomRates(rateList: List<RateDomain>): List<RateModel> {
-            var ratesToReturn = getDirectConversionToChosenCurrency(rateList)
-            var ratesWithoutChosenCurrency = getListWithoutChosenCurrency(rateList)
+            val ratesToReturn = getDirectConversionToChosenCurrency(rateList)
+            val ratesWithoutChosenCurrency = getListWithoutChosenCurrency(rateList)
 
             do {
                 ratesWithoutChosenCurrency.forEach {
                     try {
 
-                        var matchingRate = ratesToReturn.single { rate ->
+                        val matchingRate = ratesToReturn.single { rate ->
                             rate.from == it.to && rate.to != it.from
                         }
-                        var rateChosenCurrency = it.rate * matchingRate.rateChosenCurrency
+                        val rateChosenCurrency = it.rate * matchingRate.rateChosenCurrency
                         ratesToReturn.add(it.toRateModel(rateChosenCurrency))
 
                     } catch (e: Exception) {
                         Log.d("ERROR_GET_CUSTOM_RATES", "Not allowed")
                     }
                 }
-                var completeRateList = ratesToReturn.size != (rateList.size / 2)
+                val completeRateList = ratesToReturn.size != (rateList.size / 2)
             } while (completeRateList)
 
             return ratesToReturn
