@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.TransactionModel
 
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.messageToShow
 import com.macdonald.angel.gnb.ui.features.transactionList.adapters.TransactionsListAdapter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_transactions_list.*
@@ -79,43 +80,22 @@ class TransactionsListFragment : Fragment(),
                 context!!,
                 listTransactions
             ) { transactionItem: TransactionModel, _: View ->
-
-                val toast = Toasty.info(
-                    context!!,
-                    transactionItem.amount.toString(),
-                    Toast.LENGTH_LONG,
-                    true
-                )
-                toast.show()
+                messageToShow(transactionItem.amount.toString() + " " +
+                        transactionItem.currency, false)
             }
             rvTransactions.adapter = adapter
         }
-        TransactionsListViewModel.UiModel.Forbbiden -> {
-            canNotGetAnyData()
-        }
         TransactionsListViewModel.UiModel.ErrorGettingTrasactions -> {
-            canNotGetAnyData()
+            messageToShow(getString(R.string.not_get_transactions), true)
         }
         TransactionsListViewModel.UiModel.NetWorkError -> {
-            canNotGetAnyData()
+            messageToShow(getString(R.string.network_error), true)
         }
         TransactionsListViewModel.UiModel.NotTransactionDataFoundLocally -> {
             viewModel.getAllTransactionsFromRemote()
         }
         TransactionsListViewModel.UiModel.ErrorGettingsTransactions -> {
-            canNotGetAnyData()
+            messageToShow(getString(R.string.not_get_transactions), true)
         }
     }
-
-    override fun canNotGetAnyData() {
-        val toast = Toasty.info(
-            context!!,
-            getString(R.string.not_get_transactions),
-            Toast.LENGTH_LONG,
-            true
-        )
-        toast.show()
-    }
-
-
 }

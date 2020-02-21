@@ -11,6 +11,7 @@ class RatesController {
     companion object {
 
         private val EUR: String = CurrencyType.EUR.currency
+        private const val DEFAULT_RATE: Double = 1.0
 
         fun getCustomRates(rateList: List<RateDomain>): List<RateModel> {
             var ratesToReturn = getDirectConversionToChosenCurrency(rateList)
@@ -36,6 +37,15 @@ class RatesController {
             return ratesToReturn
         }
 
+        fun getChosenCurrencyRate(rateList: List<RateModel>, chosenCurrency: String): Double {
+            return try {
+                rateList.single {
+                    chosenCurrency == it.from
+                }.rateChosenCurrency
+            } catch (e: Exception) {
+                DEFAULT_RATE
+            }
+        }
 
         private fun getDirectConversionToChosenCurrency(rateList: List<RateDomain>) =
             rateList.filter {
@@ -46,6 +56,7 @@ class RatesController {
             rateList.filter {
                 it.to != EUR && it.from != EUR
             }.toMutableList()
+
 
     }
 }

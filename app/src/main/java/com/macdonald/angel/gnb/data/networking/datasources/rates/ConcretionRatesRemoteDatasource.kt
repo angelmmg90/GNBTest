@@ -28,19 +28,7 @@ class ConcretionRatesRemoteDatasource(val context: Context): RatesRemoteDatasour
                         continuation.resume(Response.Error(Throwable()))
                     }
                 } catch (e: Exception) {
-                    rates = when (e) {
-                        is HttpException -> {
-                            val isForbbiden = e.code() == 403 || e.code() == 401
-                            if (isForbbiden) {
-                                Response.Forbidden
-                            } else {
-                                Response.NetWorkError
-                            }
-                        }
-                        else -> {
-                            Response.NetWorkError
-                        }
-                    }
+                    rates = Response.NetWorkError
                     continuation.resume(rates)
                 }
             }

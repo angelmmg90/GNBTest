@@ -26,7 +26,6 @@ class TransactionsListViewModel(
 
     sealed class UiModel {
         class ShowTransactions(val transactionList: List<TransactionModel>) : UiModel()
-        object Forbbiden : UiModel()
         object ErrorGettingTrasactions : UiModel()
         object NetWorkError : UiModel()
 
@@ -75,13 +74,6 @@ class TransactionsListViewModel(
                 response = transactionsUserCase.getTransactionsFromRemote()
             }
             when (response) {
-                is Response.Forbidden -> {
-                    withContext(Dispatchers.Main) {
-                        _model.value =
-                            UiModel.Forbbiden
-                    }
-                }
-
                 is Response.Error -> {
                     withContext(Dispatchers.Main) {
                         _model.value =

@@ -51,6 +51,14 @@ fun TransactionModel.toTransactionDetailModel(): TransactionDetailsModel =
         currency = currency
     )
 
+fun TransactionModel.toTransactionDetailModel(rateChosenCurrency: Double): TransactionDetailsModel =
+    TransactionDetailsModel(
+        product = product,
+        amount = amount,
+        currency = currency,
+        conversionToChosenCurrency = amount * rateChosenCurrency
+    )
+
 fun TransactionDetailsModel.toTransactionModel(): TransactionModel =
     TransactionModel(
         product = product,
@@ -63,6 +71,16 @@ fun List<TransactionModel>.toTransactionDetailsModelList(): List<TransactionDeta
 
     this.forEach {
         transactionDetailsList.add(it.toTransactionDetailModel())
+    }
+
+    return transactionDetailsList
+}
+
+fun List<TransactionModel>.toTransactionDetailsModelList(rateChosenCurrency: Double): List<TransactionDetailsModel> {
+    val transactionDetailsList = ArrayList<TransactionDetailsModel>()
+
+    this.forEach {
+        transactionDetailsList.add(it.toTransactionDetailModel(rateChosenCurrency))
     }
 
     return transactionDetailsList

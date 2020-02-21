@@ -28,19 +28,7 @@ class ConcretionTransactionsRemoteDatasource(val context: Context): Transactions
                         continuation.resume(Response.Error(Throwable()))
                     }
                 } catch (e: Exception) {
-                    transactions = when (e) {
-                        is HttpException -> {
-                            val isForbbiden = e.code() == 403 || e.code() == 401
-                            if (isForbbiden) {
-                                Response.Forbidden
-                            } else {
-                                Response.NetWorkError
-                            }
-                        }
-                        else -> {
-                            Response.NetWorkError
-                        }
-                    }
+                    transactions = Response.NetWorkError
                     continuation.resume(transactions)
                 }
             }

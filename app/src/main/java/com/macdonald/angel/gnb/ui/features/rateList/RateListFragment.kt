@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.RateModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.messageToShow
 import com.macdonald.angel.gnb.ui.features.rateList.adapters.RatesListAdapter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_rate_list.*
@@ -58,39 +59,20 @@ class RateListFragment : Fragment(), RateListContract.View {
                 context!!,
                 listRates
             ) { rateItem: RateModel, _: View ->
-
-                val toast = Toasty.info(
-                    context!!,
-                    "Item clicked",
-                    Toast.LENGTH_LONG,
-                    true
-                )
-                toast.show()
+                messageToShow(rateItem.from + "->" +
+                            rateItem.to + ": " +
+                            rateItem.rate.toString(), false)
             }
             rvRates.adapter = adapter
         }
-        RateListViewModel.UiModel.Forbbiden -> {
-            canNotGetAnyData()
-        }
         RateListViewModel.UiModel.ErrorGettingRates -> {
-            canNotGetAnyData()
+            messageToShow(getString(R.string.not_get_rates), true)
         }
         RateListViewModel.UiModel.NetWorkError -> {
-            canNotGetAnyData()
+            messageToShow(getString(R.string.network_error), true)
         }
         RateListViewModel.UiModel.NotRateDataFoundLocally -> {
             viewModel.getAllRatesFromRemote()
         }
     }
-
-    override fun canNotGetAnyData() {
-        val toast = Toasty.info(
-            context!!,
-            getString(R.string.not_get_rates),
-            Toast.LENGTH_LONG,
-            true
-        )
-        toast.show()
-    }
-
 }

@@ -6,11 +6,11 @@ interface ProductListContract {
     interface View {
         fun initializeViews()
         fun updateUi(model: ProductListViewModel.UiModel)
-        fun canNotGetAnyData()
     }
 
     interface ViewModel {
-        fun getAllProductsFromLocal()
+        fun loadData()
+        fun getProducts()
         fun getProductsFromLocalTransactions()
         fun getProductsFromRemoteTransactions()
         fun insertAllProducts(products: List<ProductModel>)

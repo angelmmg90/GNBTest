@@ -80,8 +80,10 @@ private val scopesModule = module {
     scope((named<ProductListFragment>())) {
         scoped { ProductsUseCases(get()) }
         scoped { TransactionsUseCases(get()) }
+        scoped { RatesUseCases(get()) }
         viewModel {
             ProductListViewModel(
+                get(),
                 get(),
                 get(),
                 get()
@@ -92,8 +94,10 @@ private val scopesModule = module {
     scope((named<ProductDetailsFragment>())) {
         scoped { ProductsUseCases(get()) }
         scoped { TransactionsUseCases(get()) }
+        scoped { RatesUseCases(get()) }
         viewModel {
             ProductDetailsViewModel(
+                get(),
                 get(),
                 get(),
                 get()

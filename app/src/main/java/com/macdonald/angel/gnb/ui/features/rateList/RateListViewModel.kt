@@ -26,7 +26,6 @@ class RateListViewModel(
 
     sealed class UiModel {
         class ShowRates(val rateList: List<RateModel>) : UiModel()
-        object Forbbiden : UiModel()
         object ErrorGettingRates : UiModel()
         object NetWorkError : UiModel()
         object NotRateDataFoundLocally : UiModel()
@@ -74,13 +73,6 @@ class RateListViewModel(
                 response = ratesUserCase.getRatesFromRemote()
             }
             when (response) {
-                is Response.Forbidden -> {
-                    withContext(Dispatchers.Main) {
-                        _model.value =
-                            UiModel.Forbbiden
-                    }
-                }
-
                 is Response.Error -> {
                     withContext(Dispatchers.Main) {
                         _model.value =

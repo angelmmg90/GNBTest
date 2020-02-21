@@ -11,5 +11,9 @@
     <string name="rate_list_fragment_name">Rate List</string>
     <string name="product_list_fragment_name">Product List</string>
     <string name="product_details_fragment_name">Product Details</string>
+    <string name="not_rates_downloaded">Rates not found</string>
+    <string name="network_error">Network error</string>
+    <string name="not_found_product_transactions_details">Not found transactions for this product</string>
+    <string name="not_rate_data_found">Not possible to get product transactions details because the rate information is not found</string>
 
 </resources>

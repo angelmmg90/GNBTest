@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.messageToShow
 import com.macdonald.angel.gnb.ui.features.productList.adapters.ProductListAdapter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_product_list.*
@@ -44,7 +45,7 @@ class ProductListFragment : Fragment(), ProductListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
-        viewModel.getAllProductsFromLocal()
+        viewModel.loadData()
     }
 
     override fun initializeViews() {
@@ -69,35 +70,24 @@ class ProductListFragment : Fragment(), ProductListContract.View {
         is ProductListViewModel.UiModel.InsertProducts -> {
             viewModel.insertAllProducts(model.productList)
         }
-        ProductListViewModel.UiModel.Forbbiden -> {
-            canNotGetAnyData()
-        }
         ProductListViewModel.UiModel.NotProductDataFoundLocally -> {
             viewModel.getProductsFromLocalTransactions()
         }
         ProductListViewModel.UiModel.NetWorkError -> {
-            canNotGetAnyData()
+            messageToShow(getString(R.string.network_error), true)
         }
         ProductListViewModel.UiModel.ErrorInsertingProducts -> {
-            canNotGetAnyData()
+            messageToShow(getString(R.string.not_get_products), true)
         }
         ProductListViewModel.UiModel.ErrorGettingTransactions -> {
-            canNotGetAnyData()
+            messageToShow(getString(R.string.not_get_products), false)
         }
         ProductListViewModel.UiModel.ErrorGettingLocalTransactions -> {
             viewModel.getProductsFromRemoteTransactions()
         }
+        ProductListViewModel.UiModel.ErrorGettingRates -> {
+            messageToShow(getString(R.string.not_rates_downloaded), false)
+        }
     }
-
-    override fun canNotGetAnyData() {
-        val toast = Toasty.info(
-            context!!,
-            getString(R.string.not_get_products),
-            Toast.LENGTH_LONG,
-            true
-        )
-        toast.show()
-    }
-
 
 }

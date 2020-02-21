@@ -5,6 +5,5 @@ sealed class Response<out T> {
 
     class Error(val exception: Throwable) : Response<Nothing>()
 
-    object Forbidden : Response<Nothing>()
     object NetWorkError : Response<Nothing>()
 }
