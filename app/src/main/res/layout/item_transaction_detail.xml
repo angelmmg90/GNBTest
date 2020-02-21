@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
     android:layout_margin="20dp">
 
     <TextView
         android:id="@+id/tvProductNameDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginLeft="15dp"
         android:textColor="@android:color/black"
         tools:text="Product"
         tools:ignore="RtlHardcoded" />
@@ -21,9 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginLeft="15dp"
         android:text="|"
-        android:layout_toEndOf="@id/tvProductNameDetail"
         tools:ignore="RtlHardcoded" />
 
     <TextView
@@ -31,18 +30,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:layout_marginLeft="15dp"
         android:textColor="@android:color/black"
-        android:layout_toEndOf="@+id/lineSeparator"
-        android:layout_marginHorizontal="15dp"
-        android:layout_centerInParent="true"
         tools:text="15" />
 
     <TextView
         android:id="@+id/tvCurrencyDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/tvAmountDetail"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginLeft="15dp"
         android:textColor="@android:color/black"
         tools:text="AUD"
         />
@@ -52,15 +48,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginLeft="15dp"
         android:text="->"
-        android:layout_toLeftOf="@id/tvAmountChosenCurrencyDetail"
         tools:ignore="RtlHardcoded" />
 
     <TextView
         android:id="@+id/tvAmountChosenCurrencyDetail"
-        android:layout_marginHorizontal="15dp"
-        android:layout_toStartOf="@id/tvChosenCurrencyDetail"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:textStyle="bold"
         android:layout_height="wrap_content"
@@ -70,11 +65,10 @@
 
     <TextView
         android:id="@+id/tvChosenCurrencyDetail"
-        android:layout_marginHorizontal="15dp"
-        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         tools:text="EUR" />
 
-</RelativeLayout>
+</LinearLayout>

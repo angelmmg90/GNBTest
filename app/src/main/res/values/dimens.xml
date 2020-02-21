@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_tv_total_value">30dp</dimen>
+    <dimen name="height_total_sum">80dp</dimen>
+    <dimen name="separation_totalsum_currency_symbol">5dp</dimen>
+</resources>

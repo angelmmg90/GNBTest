@@ -3,6 +3,9 @@ package com.macdonald.angel.gnb.common
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import es.dmoral.toasty.Toasty
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 fun Fragment.messageToShow(messageToShow: String, isError: Boolean){
@@ -22,5 +25,11 @@ fun Fragment.messageToShow(messageToShow: String, isError: Boolean){
         )
     }
     toast.show()
+}
+
+fun Double.round(): String {
+    val df = DecimalFormat("#,###.00")
+    df.roundingMode = RoundingMode.HALF_EVEN
+    return df.format(this)
 }
 

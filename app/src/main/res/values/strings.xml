@@ -15,5 +15,6 @@
     <string name="network_error">Network error</string>
     <string name="not_found_product_transactions_details">Not found transactions for this product</string>
     <string name="not_rate_data_found">Not possible to get product transactions details because the rate information is not found</string>
+    <string name="total_value">Total Value:</string>
 
 </resources>

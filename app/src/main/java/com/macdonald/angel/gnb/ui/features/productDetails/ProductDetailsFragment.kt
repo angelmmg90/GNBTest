@@ -2,23 +2,26 @@ package com.macdonald.angel.gnb.ui.features.productDetails
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macdonald.angel.data.model.CurrencyType
 import com.macdonald.angel.data.model.TransactionDetailsModel
-import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.RecyclerCustomScroll
 import com.macdonald.angel.gnb.common.messageToShow
-import com.macdonald.angel.gnb.data.toTransactionModelList
+import com.macdonald.angel.gnb.common.round
 import com.macdonald.angel.gnb.ui.features.productDetails.adapters.ProductTransactionsDetailListAdapter
-import com.macdonald.angel.gnb.ui.features.transactionList.adapters.TransactionsListAdapter
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.math.roundToLong
+
 
 /**
  * A simple [Fragment] subclass.
@@ -58,6 +61,22 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
 
     override fun initializeViews() {
         rvProductTransactions.layoutManager = LinearLayoutManager(context!!)
+        rvProductTransactions.addOnScrollListener(object : RecyclerCustomScroll() {
+            override fun show() {
+                lytTotalSum.animate()
+                    .translationY(0F)
+                    .setInterpolator(DecelerateInterpolator(2F))
+                    .start()
+            }
+
+            override fun hide() {
+                lytTotalSum.animate()
+                    .translationY(lytTotalSum.height.toFloat())
+                    .setInterpolator(AccelerateInterpolator(2F))
+                    .start()
+            }
+
+        })
     }
 
     override fun updateUi(model: ProductDetailsViewModel.UiModel) = when(model) {
@@ -75,6 +94,8 @@ class ProductDetailsFragment : Fragment(), ProductDetailsContract.View {
             rvProductTransactions.adapter = adapter
         }
         is ProductDetailsViewModel.UiModel.UpdateProductDetails -> {
+            tvTotalSum.text = model.productDetails.totalSum.round().toString()
+            tvChosenCurrency.text = CurrencyType.EUR.currency
             viewModel.updateProductDetailsData(model.productDetails)
         }
         ProductDetailsViewModel.UiModel.NotProductTransactionsFoundLocally -> {
