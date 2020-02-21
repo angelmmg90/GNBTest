@@ -8,7 +8,6 @@ import es.dmoral.toasty.Toasty
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-
 fun Fragment.messageToShow(messageToShow: String, isError: Boolean){
     val toast = if(isError){
         Toasty.error(
