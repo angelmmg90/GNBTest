@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 class TransactionsListViewModel(
     private val ctx: Application,
     private val transactionsUserCase: TransactionsUseCases
-):ScopedViewModel(), TransactionsListContract.ViewModel {
+) : ScopedViewModel(), TransactionsListContract.ViewModel {
 
     private lateinit var getTransactionsJob: Job
 
@@ -90,7 +90,8 @@ class TransactionsListViewModel(
 
                 is Response.Success -> {
                     var transactionsListModel = ArrayList<TransactionModel>()
-                    var rawListTransactions = (response as Response.Success<Array<TransactionDomain>>).data
+                    var rawListTransactions =
+                        (response as Response.Success<Array<TransactionDomain>>).data
 
                     rawListTransactions.forEach {
                         transactionsListModel.add(it.toTransactionModel())

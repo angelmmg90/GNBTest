@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.macdonald.angel.data.model.RateModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.round
 import kotlinx.android.synthetic.main.item_rate.view.*
 
 class RatesListAdapter(
     val context: Context,
     private val listRates: List<RateModel>,
     private val clickListener: (RateModel, View) -> Unit
-    ) : RecyclerView.Adapter<RatesListAdapter.RateItemViewHolder>() {
+) : RecyclerView.Adapter<RatesListAdapter.RateItemViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -38,12 +39,12 @@ class RatesListAdapter(
         private var view: View = itemView
 
         fun bindRateItem(
-           rateItem: RateModel,
+            rateItem: RateModel,
             clickListener: (RateModel, View) -> Unit
         ) {
             itemView.tvFrom.text = rateItem.from
             itemView.tvTo.text = rateItem.to
-            itemView.tvRate.text = rateItem.rateChosenCurrency.toString()
+            itemView.tvRate.text = rateItem.rateChosenCurrency.round()
             itemView.setOnClickListener {
                 clickListener(rateItem, view)
             }

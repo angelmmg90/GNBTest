@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.macdonald.angel.data.model.ProductModel
 import com.macdonald.angel.gnb.R
 import com.macdonald.angel.gnb.common.messageToShow
-import com.macdonald.angel.gnb.ui.features.productDetails.adapters.ProductTransactionsDetailListAdapter
 import com.macdonald.angel.gnb.ui.features.productList.adapters.ProductListAdapter
-import com.macdonald.angel.gnb.ui.features.transactionList.adapters.TransactionsListAdapter
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,7 +31,6 @@ class ProductListFragment : Fragment(), ProductListContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_product_list, container, false)
     }
 
@@ -52,7 +49,7 @@ class ProductListFragment : Fragment(), ProductListContract.View {
         rvProducts.layoutManager = GridLayoutManager(context!!, 2)
     }
 
-    override fun updateUi(model: ProductListViewModel.UiModel) = when(model) {
+    override fun updateUi(model: ProductListViewModel.UiModel) = when (model) {
         is ProductListViewModel.UiModel.ShowProducts -> {
             listProducts = model.productList as ArrayList<ProductModel>
             adapter = ProductListAdapter(

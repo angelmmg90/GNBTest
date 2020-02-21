@@ -3,12 +3,12 @@ package com.macdonald.angel.gnb.ui.features.productDetails
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.macdonald.angel.data.model.*
-import com.macdonald.angel.data.repositories.Response
-import com.macdonald.angel.domain.ratesUseCase.RateDomain
+import com.macdonald.angel.data.model.ProductDetailsModel
+import com.macdonald.angel.data.model.RateModel
+import com.macdonald.angel.data.model.TransactionDetailsModel
+import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.gnb.common.ScopedViewModel
 import com.macdonald.angel.gnb.data.toTransactionDetailsModelList
-import com.macdonald.angel.gnb.ui.features.rateList.RateListViewModel
 import com.macdonald.angel.gnb.ui.features.rateList.RatesController
 import com.macdonald.angel.usecases.ProductsUseCases
 import com.macdonald.angel.usecases.RatesUseCases
@@ -20,7 +20,7 @@ class ProductDetailsViewModel(
     private val productUseCases: ProductsUseCases,
     private val transactionsUseCases: TransactionsUseCases,
     private val ratesUseCases: RatesUseCases
-):ScopedViewModel(), ProductDetailsContract.ViewModel {
+) : ScopedViewModel(), ProductDetailsContract.ViewModel {
 
 
     private lateinit var getTransactionsByProductJob: Job
@@ -61,7 +61,7 @@ class ProductDetailsViewModel(
     }
 
     override fun getProductDetailsData(productName: String, chosenCurrency: String) {
-        lateinit var productDetails : ProductDetailsModel
+        lateinit var productDetails: ProductDetailsModel
         var transactionDetailList: List<TransactionDetailsModel>
         var transactionsData: List<TransactionModel>
         var rateList: List<RateModel>
@@ -70,13 +70,14 @@ class ProductDetailsViewModel(
 
             withContext(Dispatchers.IO) {
                 rateList = ratesUseCases.getRatesFromLocal()
-                if(rateList.isNullOrEmpty()){
+                if (rateList.isNullOrEmpty()) {
                     withContext(Dispatchers.Main) {
                         _model.value =
                             UiModel.NotRateDataFoundLocally
                     }
-                }else{
-                    var rateChosenCurrency = RatesController.getChosenCurrencyRate(rateList, chosenCurrency)
+                } else {
+                    var rateChosenCurrency =
+                        RatesController.getChosenCurrencyRate(rateList, chosenCurrency)
                     transactionsData = transactionsUseCases.getTransactionsByProduct(productName)
                     transactionDetailList =
                         transactionsData.toTransactionDetailsModelList(rateChosenCurrency)
@@ -114,11 +115,11 @@ class ProductDetailsViewModel(
 
             productUpdated = productUseCases.updateProductDetails(productDetails)
 
-            if (productUpdated){
+            if (productUpdated) {
                 withContext(Dispatchers.Main) {
-                    if(productDetails.transactions.isNullOrEmpty()){
+                    if (productDetails.transactions.isNullOrEmpty()) {
                         _model.value = UiModel.NotProductTransactionsFoundLocally
-                    }else{
+                    } else {
                         _model.value = UiModel.ShowProductDetailsData(
                             productDetails
                         )

@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.macdonald.angel.data.model.TransactionModel
 import com.macdonald.angel.gnb.R
+import com.macdonald.angel.gnb.common.round
 import kotlinx.android.synthetic.main.item_transaction.view.*
 
 class TransactionsListAdapter(
     val context: Context,
     private val listTransactions: List<TransactionModel>,
     private val clickListener: (TransactionModel, View) -> Unit
-    ) : RecyclerView.Adapter<TransactionsListAdapter.TransactionItemViewHolder>() {
+) : RecyclerView.Adapter<TransactionsListAdapter.TransactionItemViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -38,11 +39,11 @@ class TransactionsListAdapter(
         private var view: View = itemView
 
         fun bindTransactionItem(
-           transactionItem: TransactionModel,
+            transactionItem: TransactionModel,
             clickListener: (TransactionModel, View) -> Unit
         ) {
             itemView.tvProduct.text = transactionItem.product
-            itemView.tvAmount.text = transactionItem.amount.toString()
+            itemView.tvAmount.text = transactionItem.amount.round()
             itemView.tvCurrency.text = transactionItem.currency
             itemView.setOnClickListener {
                 clickListener(transactionItem, view)

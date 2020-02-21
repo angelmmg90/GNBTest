@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_alignParentEnd="true"
-        tools:text="1.359" />
+        android:textStyle="bold"
+        tools:text="1.35" />
 
 </RelativeLayout>

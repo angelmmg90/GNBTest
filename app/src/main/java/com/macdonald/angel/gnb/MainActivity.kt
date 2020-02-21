@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration : AppBarConfiguration
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +56,10 @@ class MainActivity : AppCompatActivity() {
                     toolbar?.visibility = View.VISIBLE
                     bottomNavMenu.visibility = View.VISIBLE
                 }
+                R.id.productDetailsFragment -> {
+                    toolbar?.visibility = View.VISIBLE
+                    bottomNavMenu.visibility = View.GONE
+                }
             }
         }
 
@@ -65,8 +69,10 @@ class MainActivity : AppCompatActivity() {
         return findNavController(R.id.navHostFragment).navigateUp(appBarConfiguration)
     }
 
-    private fun setupActionBar(navController: NavController,
-                               appBarConfig : AppBarConfiguration) {
+    private fun setupActionBar(
+        navController: NavController,
+        appBarConfig: AppBarConfiguration
+    ) {
         setupActionBarWithNavController(navController, appBarConfig)
     }
 

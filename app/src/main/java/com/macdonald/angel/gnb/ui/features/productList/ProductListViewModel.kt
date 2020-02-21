@@ -13,7 +13,6 @@ import com.macdonald.angel.gnb.common.ScopedViewModel
 import com.macdonald.angel.gnb.data.getProductsFromTransactionsList
 import com.macdonald.angel.gnb.data.toProductDetailsList
 import com.macdonald.angel.gnb.data.toTransactionModel
-import com.macdonald.angel.gnb.ui.features.productDetails.ProductDetailsViewModel
 import com.macdonald.angel.gnb.ui.features.rateList.RatesController
 import com.macdonald.angel.usecases.ProductsUseCases
 import com.macdonald.angel.usecases.RatesUseCases
@@ -25,7 +24,7 @@ class ProductListViewModel(
     private val productUseCases: ProductsUseCases,
     private val transactionsUseCases: TransactionsUseCases,
     private val ratesUseCases: RatesUseCases
-):ScopedViewModel(), ProductListContract.ViewModel {
+) : ScopedViewModel(), ProductListContract.ViewModel {
     private lateinit var getProductsJob: Job
     private lateinit var getRatesJob: Job
     private lateinit var getTransactionsJob: Job
@@ -123,7 +122,6 @@ class ProductListViewModel(
 
     }
 
-
     override fun getProductsFromRemoteTransactions() {
         lateinit var response: Response<Array<TransactionDomain>>
         var productList: ArrayList<ProductModel> = ArrayList()
@@ -149,7 +147,8 @@ class ProductListViewModel(
 
                 is Response.Success -> {
                     var transactionsListModel = ArrayList<TransactionModel>()
-                    var rawListTransactions = (response as Response.Success<Array<TransactionDomain>>).data
+                    var rawListTransactions =
+                        (response as Response.Success<Array<TransactionDomain>>).data
 
                     rawListTransactions.forEach {
                         transactionsListModel.add(it.toTransactionModel())
@@ -176,7 +175,8 @@ class ProductListViewModel(
         var productsInserted: Boolean
 
         insertProductsJob = CoroutineScope(Dispatchers.IO).launch {
-            productsInserted = productUseCases.persistProductsIntoDatabase(products.toProductDetailsList())
+            productsInserted =
+                productUseCases.persistProductsIntoDatabase(products.toProductDetailsList())
 
             if (productsInserted) {
                 withContext(Dispatchers.Main) {
@@ -191,7 +191,7 @@ class ProductListViewModel(
     }
 
 
-    private fun getRates(){
+    private fun getRates() {
         lateinit var ratesData: List<RateModel>
 
         getRatesJob = CoroutineScope(Dispatchers.IO).launch {
@@ -204,7 +204,7 @@ class ProductListViewModel(
         }
     }
 
-    private fun getRatesFromRemote(){
+    private fun getRatesFromRemote() {
         lateinit var response: Response<Array<RateDomain>>
 
         getRatesJob = CoroutineScope(Dispatchers.IO).launch {
@@ -215,7 +215,7 @@ class ProductListViewModel(
                 is Response.Error -> {
                     withContext(Dispatchers.Main) {
                         _model.value =
-                           UiModel.ErrorGettingRates
+                            UiModel.ErrorGettingRates
                     }
                 }
 

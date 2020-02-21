@@ -7,14 +7,13 @@ import com.macdonald.angel.data.model.RateModel
 import com.macdonald.angel.data.repositories.Response
 import com.macdonald.angel.domain.ratesUseCase.RateDomain
 import com.macdonald.angel.gnb.common.ScopedViewModel
-import com.macdonald.angel.gnb.data.toRateModel
 import com.macdonald.angel.usecases.RatesUseCases
 import kotlinx.coroutines.*
 
 class RateListViewModel(
     private val ctx: Application,
     private val ratesUserCase: RatesUseCases
-):ScopedViewModel(), RateListContract.ViewModel {
+) : ScopedViewModel(), RateListContract.ViewModel {
 
     private lateinit var getRatesJob: Job
 
@@ -63,7 +62,6 @@ class RateListViewModel(
             }
         }
     }
-
 
     override fun getAllRatesFromRemote() {
         lateinit var response: Response<Array<RateDomain>>
