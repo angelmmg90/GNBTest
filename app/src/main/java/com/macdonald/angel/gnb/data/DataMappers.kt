@@ -6,6 +6,7 @@ import com.macdonald.angel.domain.transactionsUseCase.TransactionDomain
 import com.macdonald.angel.gnb.data.database.entities.ProductEntity
 import com.macdonald.angel.gnb.data.database.entities.RateEntity
 import com.macdonald.angel.gnb.data.database.entities.TransactionEntity
+import com.macdonald.angel.gnb.ui.features.rateList.RatesController
 
 fun TransactionDomain.toTransactionModel(): TransactionModel =
     TransactionModel(
@@ -51,12 +52,13 @@ fun TransactionModel.toTransactionDetailModel(): TransactionDetailsModel =
         currency = currency
     )
 
-fun TransactionModel.toTransactionDetailModel(rateChosenCurrency: Double): TransactionDetailsModel =
+fun TransactionModel.toTransactionDetailModel(rateList: List<RateModel>, currentCurrency: String)
+        : TransactionDetailsModel =
     TransactionDetailsModel(
         product = product,
         amount = amount,
         currency = currency,
-        conversionToChosenCurrency = amount * rateChosenCurrency
+        conversionToChosenCurrency = amount * RatesController.getChosenCurrencyRate(rateList, currentCurrency)
     )
 
 fun TransactionDetailsModel.toTransactionModel(): TransactionModel =
@@ -66,11 +68,11 @@ fun TransactionDetailsModel.toTransactionModel(): TransactionModel =
         currency = currency
     )
 
-fun List<TransactionModel>.toTransactionDetailsModelList(rateChosenCurrency: Double): List<TransactionDetailsModel> {
+fun List<TransactionModel>.toTransactionDetailsModelList(rateList: List<RateModel>): List<TransactionDetailsModel> {
     val transactionDetailsList = ArrayList<TransactionDetailsModel>()
 
     this.forEach {
-        transactionDetailsList.add(it.toTransactionDetailModel(rateChosenCurrency))
+        transactionDetailsList.add(it.toTransactionDetailModel(rateList, it.currency))
     }
 
     return transactionDetailsList
